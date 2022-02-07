@@ -66,10 +66,6 @@
     padding: 0.5em;
   }
 
-  button {
-    color: white;
-  }
-
   ul {
     width: 30em;
     margin: 0 auto;
