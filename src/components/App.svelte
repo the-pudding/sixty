@@ -4,16 +4,18 @@
   import Slide from "$components/helpers/Slider.Slide.svelte";
   import Header from "$components/Header.svelte";
   import copy from "$data/doc.json";
+
+  let slider;
 </script>
 
 <!-- <WIP /> -->
 
-<Slider>
+<Slider bind:this={slider} duration="400ms">
   <Slide>
-    <div class="inner">
+    <div class="inner" id="intro">
       <Header />
       <h1>{copy.hed}</h1>
-      <button>{copy.introButton}</button>
+      <p><button on:click={slider.next}>{copy.introButton}</button></p>
       <small class="note">{copy.introNote}</small>
     </div>
   </Slide>
@@ -25,5 +27,17 @@
     position: absolute;
     bottom: 0;
     right: 0;
+  }
+
+  #intro p {
+    margin-top: 2em;
+    text-align: center;
+  }
+
+  #intro button {
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+    font-weight: bold;
   }
 </style>
