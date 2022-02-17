@@ -16,6 +16,7 @@
     left: 0;
     width: 100%;
     transform: translate(0, 0.25em);
+    font-size: 0.625em;
   }
   .wordmark {
     max-width: 10em;

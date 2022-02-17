@@ -2,7 +2,7 @@
   import Time from "svelte-time";
   import { onMount } from "svelte";
   import { supabase } from "$utils/supabase.js";
-  const table = "chat";
+  const table = "readers";
   let channel = 0;
   let value;
 
@@ -11,8 +11,8 @@
   const sendMessage = async (message) => {
     // console.log(message);
     try {
-      // const { data, error } = await supabase.from(table).insert([{ message, channel }]);
-      const { data, error } = await supabase.from(table).delete().match({ id: 13 });
+      const { data, error } = await supabase.from(table).insert([{ message, channel }]);
+      // const { data, error } = await supabase.from(table).delete().match({ id: 13 });
       console.log({ data, error });
     } catch (err) {
       console.log(err);
