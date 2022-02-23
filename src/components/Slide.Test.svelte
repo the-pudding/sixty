@@ -21,7 +21,12 @@
       count: 10
     },
     roll: {
-      options: ["•", "••", "•••", "••••", "•••••", "••••••"],
+      options: ["•", "••", "•••", "••••", "•••••", "••••••"].map((d) =>
+        d
+          .split("")
+          .map((v) => `<span>${v}</span>`)
+          .join("")
+      ),
       count: 10
     }
   };
@@ -48,12 +53,14 @@
 <div class="test test--{name}">
   <p><small>Challege {index} of 3</small></p>
   <p>{@html prompt}</p>
-  <p><small>{@html warning}</small></p>
+  {#if warning}
+    <p><small>{@html warning}</small></p>
+  {/if}
 
   <div class="options">
     {#each options as value, i}
       <button disabled={done} value={i} on:pointerup={onOptionClick}>
-        <span>{value}</span>
+        <span class="inner">{@html value}</span>
       </button>
     {/each}
   </div>
@@ -116,7 +123,10 @@
     pointer-events: none;
   }
 
-  span {
+  span.inner {
+    display: grid;
+    grid: repeat(3, 1fr) / repeat(3, 1fr);
+    justify-content: center;
     font-size: 0.75em;
     text-transform: uppercase;
     pointer-events: none;
@@ -150,5 +160,115 @@
 
   .test--roll .placeholders {
     display: block;
+  }
+
+  :global(.test--roll .inner span) {
+    transform-origin: center center;
+    transform: scale(2);
+  }
+
+  :global(.test--roll .options button:nth-of-type(1) .inner span:nth-of-type(1)) {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(2) .inner span:nth-of-type(1)) {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(2) .inner span:nth-of-type(2)) {
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(3) .inner span:nth-of-type(1)) {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(3) .inner span:nth-of-type(2)) {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(3) .inner span:nth-of-type(3)) {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(4) .inner span:nth-of-type(1)) {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(4) .inner span:nth-of-type(2)) {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(4) .inner span:nth-of-type(3)) {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(4) .inner span:nth-of-type(4)) {
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(5) .inner span:nth-of-type(1)) {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(5) .inner span:nth-of-type(2)) {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(5) .inner span:nth-of-type(3)) {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(5) .inner span:nth-of-type(4)) {
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(5) .inner span:nth-of-type(5)) {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(6) .inner span:nth-of-type(1)) {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(6) .inner span:nth-of-type(2)) {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(6) .inner span:nth-of-type(3)) {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(6) .inner span:nth-of-type(4)) {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(6) .inner span:nth-of-type(5)) {
+    grid-column: 3 / span 1;
+    grid-row: 2 / span 1;
+  }
+
+  :global(.test--roll .options button:nth-of-type(6) .inner span:nth-of-type(6)) {
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
   }
 </style>
