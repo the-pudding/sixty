@@ -1,17 +1,18 @@
 <script>
   import { range } from "d3";
-  import { createEventDispatcher, getContext } from "svelte";
-  import storage from "$utils/localStorage.js";
+  import { createEventDispatcher } from "svelte";
+  import Nav from "$components/Nav.svelte";
+  import { user } from "$stores/misc.js";
 
   export let index;
   export let name;
   export let prompt;
+  export let warning;
 
-  const { storagePrefix } = getContext("App");
   const dispatch = createEventDispatcher();
 
   const layouts = {
-    flip: {
+    toss: {
       options: ["Heads", "Tails"],
       count: 12
     },
@@ -28,13 +29,15 @@
   const { options, count } = layouts[name];
   const placeholders = range(count);
   let sequence = [];
+  let answer = "";
 
   const onOptionClick = (e) => {
     const val = e.target.value;
     sequence = [...sequence, val];
-    storage.set(`${storagePrefix}_${name}`, sequence);
   };
 
+  $: answer = sequence.join("");
+  $: $user[name] = answer;
   $: prevIndex = +sequence[sequence.length - 1];
   $: prev = options[prevIndex] ?? "None";
   $: left = count - sequence.length;
@@ -45,6 +48,7 @@
 <div class="test test--{name}">
   <p><small>Challege {index} of 3</small></p>
   <p>{@html prompt}</p>
+  <p><small>{@html warning}</small></p>
 
   <div class="options">
     {#each options as value, i}
@@ -61,16 +65,18 @@
   <div class="placeholders">
     <ul>
       {#each placeholders as p}
-        <li>{sequence[p] ? +sequence[p] + 1 : ""}</li>
+        <li>{@html sequence[p] ? +sequence[p] + 1 : "&nbsp;"}</li>
       {/each}
     </ul>
   </div>
 
   <p><small>{left} choice{suffix} left</small></p>
 
-  {#if done}
-    <div><button on:click={() => dispatch("next")}>Next</button></div>
+  {#if done || true}
+    <Nav on:next on:prev />
   {/if}
+
+  <button on:click={() => dispatch("jump")}>Skip to results</button>
 </div>
 
 <style>
@@ -96,7 +102,7 @@
     max-width: calc(var(--sz) * 3 + 2em);
   }
 
-  button {
+  .options button {
     width: var(--sz);
     height: var(--sz);
     border-radius: 50%;
@@ -114,14 +120,12 @@
     font-size: 0.75em;
     text-transform: uppercase;
     pointer-events: none;
-    /* display: grid;
-    width: 100%;
-    height: 100%; */
   }
 
   .previous,
   .placeholders {
     display: none;
+    margin: 0 auto;
   }
 
   .placeholders ul {

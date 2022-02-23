@@ -12,8 +12,8 @@
 <style>
   header {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 0.5rem;
+    left: 0.5rem;
     width: 100%;
     transform: translate(0, 0.25em);
     font-size: 0.625em;

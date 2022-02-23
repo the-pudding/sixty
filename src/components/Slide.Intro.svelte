@@ -1,8 +1,11 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import Header from "$components/Header.svelte";
+  import { user } from "$stores/misc.js";
   export let hed;
   export let button;
+  export let repeat;
+  export let jump;
   export let note;
 
   const dispatch = createEventDispatcher();
@@ -10,14 +13,27 @@
 
 <Header />
 <h1>{hed}</h1>
-<p><button on:click={() => dispatch("next")}>{button}</button></p>
+{#if $user.story}
+  <p class="repeat">
+    {repeat}
+  </p>
+{/if}
+<p>
+  <button on:click={() => dispatch("next")}>{button}</button>
+</p>
+{#if $user.story}
+  <p>
+    <button class="jump" on:click={() => dispatch("jump")}>{jump}</button>
+  </p>
+{/if}
+
 <small class="note">{note}</small>
 
 <style>
   .note {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 0.5rem;
+    right: 0.5rem;
   }
 
   p {
@@ -25,10 +41,25 @@
     text-align: center;
   }
 
+  p.repeat {
+    text-align: left;
+  }
+
   button {
     width: 6em;
     height: 6em;
     border-radius: 50%;
     font-weight: bold;
+  }
+
+  button.jump {
+    background: none;
+    border: none;
+    width: auto;
+    height: auto;
+    border-bottom: 0.1em solid currentColor;
+    border-radius: 0;
+    font-weight: normal;
+    padding: 0;
   }
 </style>

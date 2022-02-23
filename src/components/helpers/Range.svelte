@@ -4,8 +4,10 @@
   export let max = 100;
   export let step = 1;
   export let showTicks = false;
+  export let showValue = false;
   export let value = min;
 
+  const id = `range-${Math.random()}`.replace(".", "");
   const getDecimalCount = (value) => {
     if (Math.floor(value) === value) return 0;
     return value.toString().split(".")[1].length || 0;
@@ -13,6 +15,8 @@
 
   $: decimals = getDecimalCount(step);
   $: ticks = showTicks ? range(min, max + step, step) : [];
+  $: percent = ((value - min) * 100) / (max - min);
+  $: left = `calc(${percent}% + (${12 - percent * 0.25}px))`;
 </script>
 
 <div class="range">
@@ -21,7 +25,8 @@
       <span class="tick">{format(`.${decimals}f`)(tick)}</span>
     {/each}
   </div>
-  <input type="range" {min} {max} {step} bind:value />
+  <input {id} type="range" {min} {max} {step} bind:value />
+  <output style:left class:visible={showValue} name="result" for={id}>{value}</output>
 </div>
 
 <style>
@@ -52,6 +57,7 @@
   input[type="range"]:focus::-moz-range-thumb,
   input[type="range"]:focus::-ms-thumb {
     box-shadow: 0 0 4px 0 var(--color-focus, #999);
+    position: relative;
   }
 
   input[type="range"]::-webkit-slider-runnable-track {
@@ -161,5 +167,20 @@
 
   .tick:last-of-type {
     transform: translate(1px, 0);
+  }
+
+  output {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -150%);
+    text-align: center;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  output.visible {
+    display: block;
   }
 </style>
