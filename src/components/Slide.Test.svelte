@@ -123,7 +123,7 @@
     pointer-events: none;
   }
 
-  span.inner {
+  .test--roll span.inner {
     display: grid;
     grid: repeat(3, 1fr) / repeat(3, 1fr);
     justify-content: center;
@@ -154,7 +154,7 @@
     visibility: hidden;
   }
 
-  .test--flip .previous {
+  .test--toss .previous {
     display: block;
   }
 
