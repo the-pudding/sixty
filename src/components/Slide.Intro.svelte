@@ -15,17 +15,12 @@
 <h1>{hed}</h1>
 {#if $user.story}
   <p class="repeat">
-    {repeat}
+    {repeat} <button class="jump" on:click={() => dispatch("jump")}>{jump}</button>
   </p>
 {/if}
 <p>
   <button on:click={() => dispatch("next")}>{button}</button>
 </p>
-{#if $user.story}
-  <p>
-    <button class="jump" on:click={() => dispatch("jump")}>{jump}</button>
-  </p>
-{/if}
 
 <small class="note">{note}</small>
 

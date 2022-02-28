@@ -31,7 +31,7 @@
 	--color-selection: var(--color-gray-300);
   --color-highlight: var(--color-yellow);
 
-	--col-width: 35rem;
+	--col-width: 45rem;
 	
 }
 
@@ -50,7 +50,12 @@ h1 {
 	line-height: 1.1;
 	margin: 1rem auto;
 	max-width: var(--col-width);
-	font-size: 2.5em;
+	font-size: 2.75em;
+}
+
+h3 {
+	font-size: 1.5em;
+	line-height: 1.1;
 }
 
 p {
