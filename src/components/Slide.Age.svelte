@@ -21,7 +21,7 @@
     done = true;
     $user.age = value;
 
-    if (!$user.story && data.age && data.toss && data.spot && data.roll) {
+    if (!$user.story && $user.age && $user.toss && $user.spot && $user.roll) {
       const table = "readers";
       const data = {};
       const keys = ["age", "toss", "spot", "roll"];

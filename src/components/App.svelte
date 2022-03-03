@@ -15,6 +15,7 @@
   const slideComponents = { Text, Intro, Test, Age };
   const storagePrefix = "pudding_sixty";
   const storageKeys = ["story", "rightwrong", "guess", "age", "toss", "roll", "spot"];
+  const jumpIndex = 5;
 
   let jumped;
   let slide = 0;
@@ -24,7 +25,6 @@
 
   const scroll = async () => {
     await tick();
-    console.log(slide);
     location.hash = `#slide-${slide}`;
     removeHash();
   };
@@ -35,8 +35,7 @@
   };
 
   const onJump = () => {
-    jumped = true;
-    slide = 5;
+    slide = jumpIndex;
     scroll();
   };
 
@@ -44,6 +43,7 @@
     Object.keys(store).forEach((key) => localStorage.set(`${storagePrefix}_${key}`, store[key]));
   };
 
+  $: jumped = slide >= jumpIndex;
   $: updateStorage($user);
 
   onMount(() => {
