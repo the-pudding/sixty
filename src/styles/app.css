@@ -18,7 +18,7 @@
 
 	/* presets */
 	--border-radius: 4px;
-	--font-body: var(--sans);
+	--font-body: var(--serif);
 	--font-form: var(--sans);
 	--color-bg: var(--color-white);
 	--color-fg: var(--color-gray-900);
@@ -35,9 +35,13 @@
 	
 }
 
-html, body, main, body > div {
+/* html, body, main, body > div {
 	height: 100%;
 	overflow: hidden;
+} */
+
+html {
+	scroll-behavior: smooth;
 }
 
 main {
@@ -59,7 +63,7 @@ h3 {
 }
 
 p {
-	line-height: 1.4;
+	line-height: 1.6;
 	margin: 1rem auto;
 	max-width: var(--col-width);
 	font-size: 1.25em;
@@ -74,5 +78,5 @@ small {
 }
 
 button {
-	border: 0.25em solid var(--color-fg);
+	
 }

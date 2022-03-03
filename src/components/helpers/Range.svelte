@@ -6,6 +6,7 @@
   export let showTicks = false;
   export let showValue = false;
   export let value = min;
+  export let disabled;
 
   const id = `range-${Math.random()}`.replace(".", "");
   const getDecimalCount = (value) => {
@@ -25,7 +26,7 @@
       <span class="tick">{format(`.${decimals}f`)(tick)}</span>
     {/each}
   </div>
-  <input {id} type="range" {min} {max} {step} bind:value />
+  <input {disabled} {id} type="range" {min} {max} {step} bind:value />
   <output style:left class:visible={showValue} name="result" for={id}>{value}</output>
 </div>
 
@@ -35,6 +36,10 @@
     --tick-font-size: 12px;
     position: relative;
     margin-bottom: calc(var(--thumb-width) * 2);
+  }
+
+  input:disabled {
+    cursor: not-allowed;
   }
 
   input[type="range"] {

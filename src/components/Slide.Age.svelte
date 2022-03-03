@@ -4,15 +4,15 @@
   import { user } from "$stores/misc.js";
   import { insert } from "$utils/supabase.js";
 
-  export let responses;
-  export let explain;
-  export let question;
+  // export let responses;
+  export let guess;
+  export let prompt;
   export let note;
   export let detail;
 
   const dispatch = createEventDispatcher();
   const guessType = "right";
-  const response = responses[guessType];
+  // const response = responses[guessType];
 
   let value = 0;
   let done;
@@ -35,22 +35,27 @@
   $: disabled = value === 0 || done;
 </script>
 
-<p>{response} {explain}</p>
-<p>{question}</p>
-<div class="range">
-  <Range min={0} max={120} bind:value showValue={true} />
+<div class="age">
+  <p>{guess} {"over 60"}. {prompt}</p>
+  <div class="range">
+    <Range disabled={done} min={0} max={120} bind:value showValue={true} />
+  </div>
+
+  <button {disabled} on:click={onClick}>I am <strong>{value}</strong> years old</button>
+
+  <details>
+    <summary>
+      <small>{note}</small>
+    </summary>
+    <div><small>{@html detail}</small></div>
+  </details>
 </div>
 
-<button {disabled} on:click={onClick}>I am <strong>{value}</strong> years old</button>
-
-<details>
-  <summary>
-    <small>{note}</small>
-  </summary>
-  <div><small>{@html detail}</small></div>
-</details>
-
 <style>
+  :global(.jumped .age) {
+    display: none;
+  }
+
   .range {
     margin: 2em auto;
   }

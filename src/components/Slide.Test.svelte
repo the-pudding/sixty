@@ -8,6 +8,7 @@
   export let name;
   export let prompt;
   export let warning;
+  export let instructions;
 
   const dispatch = createEventDispatcher();
 
@@ -35,27 +36,42 @@
   const placeholders = range(count);
   let sequence = [];
   let answer = "";
+  let skip;
 
   const onOptionClick = (e) => {
     const val = e.target.value;
     sequence = [...sequence, val];
   };
 
+  const onSkip = () => {
+    left = 0;
+    skip = true;
+    dispatch("jump");
+  };
+
   $: answer = sequence.join("");
   $: $user[name] = answer;
   $: prevIndex = +sequence[sequence.length - 1];
-  $: prev = options[prevIndex] ?? "None";
+  $: prev = options[prevIndex] ?? "n/a";
   $: left = count - sequence.length;
   $: done = left <= 0;
+  $: if (done && !skip) dispatch("next");
   $: suffix = count === 1 ? "" : "s";
 </script>
 
-<div class="test test--{name}">
-  <p><small>Challege {index} of 3</small></p>
-  <p>{@html prompt}</p>
-  {#if warning}
-    <p><small>{@html warning}</small></p>
+<div class="prep" class:done>
+  {#if instructions}
+    <p class="instructions"><small>{@html instructions}</small></p>
   {/if}
+
+  {#if warning}
+    <p class="warning"><small>{@html warning}</small></p>
+  {/if}
+</div>
+
+<div class="test test--{name}" class:done>
+  <p class="challenge"><small>Challege {index} of 3</small></p>
+  <p class="prompt">{@html prompt} <span><mark>{left}</mark> choice{suffix} left.</span></p>
 
   <div class="options">
     {#each options as value, i}
@@ -66,7 +82,7 @@
   </div>
 
   <div class="previous">
-    <p>Previous Choice: {prev}</p>
+    <p><small>Previous Choice: {prev}</small></p>
   </div>
 
   <div class="placeholders">
@@ -77,27 +93,47 @@
     </ul>
   </div>
 
-  <p><small>{left} choice{suffix} left</small></p>
-
-  {#if done || true}
-    <Nav on:next on:prev />
-  {/if}
-
-  <button on:click={() => dispatch("jump")}>Skip to results</button>
+  <button on:click={onSkip}>Skip to results</button>
 </div>
 
 <style>
   .test {
     --sz: 4.5em;
+    font-family: var(--sans);
   }
 
-  small {
+  :global(.jumped .test),
+  :global(.jumped .prep) {
+    display: none;
+  }
+
+  .done {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.25;
+  }
+
+  .prep small {
+    color: var(--color-gray-600);
+  }
+
+  .test small {
     text-transform: uppercase;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
   }
 
   p {
     margin-top: 0;
+  }
+
+  .prompt mark {
+    display: inline-block;
+    width: 1.75em;
+    text-align: center;
+  }
+
+  .prompt span {
+    display: inline-block;
   }
 
   .options {
@@ -117,6 +153,10 @@
     margin: 0.325em;
     line-height: 1;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  button span {
+    pointer-events: none;
   }
 
   button:disabled {
