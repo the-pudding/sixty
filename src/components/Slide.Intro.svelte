@@ -62,4 +62,8 @@
   button:disabled {
     visibility: hidden;
   }
+
+  button.jump {
+    font-size: 1em;
+  }
 </style>
