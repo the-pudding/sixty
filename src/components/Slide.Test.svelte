@@ -61,11 +61,9 @@
 
 <div class="prep" class:done>
   {#if instructions}
-    <p class="instructions"><small>{@html instructions}</small></p>
-  {/if}
-
-  {#if warning}
-    <p class="warning"><small>{@html warning}</small></p>
+    <p class="instructions">
+      <small>{@html instructions} {@html warning}</small>
+    </p>
   {/if}
 </div>
 
@@ -93,7 +91,7 @@
     </ul>
   </div>
 
-  <button on:click={onSkip}>Skip to results</button>
+  <button class="jump" on:click={onSkip}>Quit and skip to results</button>
 </div>
 
 <style>
@@ -175,7 +173,12 @@
   .previous,
   .placeholders {
     display: none;
-    margin: 0 auto;
+    margin: 1rem auto;
+  }
+
+  .previous p {
+    margin: 0;
+    line-height: 1;
   }
 
   .placeholders ul {
@@ -183,6 +186,7 @@
   }
 
   .placeholders li {
+    line-height: 1;
     width: 1em;
     border-bottom: 0.125em solid currentColor;
     margin: 0 0.25em;

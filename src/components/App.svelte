@@ -15,10 +15,15 @@
   const slideComponents = { Text, Intro, Test, Age };
   const storagePrefix = "pudding_sixty";
   const storageKeys = ["story", "rightwrong", "guess", "age", "toss", "roll", "spot"];
+  const ageIndex = 4;
   const jumpIndex = 5;
 
   let jumped;
   let slide = 0;
+
+  const getGuess = () => {
+    console.log($user);
+  };
 
   const removeHash = () =>
     history.pushState("", document.title, window.location.pathname + window.location.search);
@@ -43,6 +48,7 @@
     Object.keys(store).forEach((key) => localStorage.set(`${storagePrefix}_${key}`, store[key]));
   };
 
+  $: if (slide === ageIndex) getGuess();
   $: jumped = slide >= jumpIndex;
   $: updateStorage($user);
 

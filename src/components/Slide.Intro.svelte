@@ -62,17 +62,4 @@
   button:disabled {
     visibility: hidden;
   }
-
-  button.jump {
-    background: none;
-    border: none;
-    width: auto;
-    height: auto;
-    border-bottom: 0.1em solid currentColor;
-    border-radius: 0;
-    font-size: 1em;
-    font-weight: normal;
-    padding: 0;
-    margin: 0;
-  }
 </style>

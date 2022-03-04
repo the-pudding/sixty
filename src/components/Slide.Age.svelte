@@ -4,15 +4,12 @@
   import { user } from "$stores/misc.js";
   import { insert } from "$utils/supabase.js";
 
-  // export let responses;
   export let guess;
   export let prompt;
   export let note;
   export let detail;
 
   const dispatch = createEventDispatcher();
-  const guessType = "right";
-  // const response = responses[guessType];
 
   let value = 0;
   let done;
@@ -26,7 +23,7 @@
       const data = {};
       const keys = ["age", "toss", "spot", "roll"];
       keys.forEach((key) => (data[key] = $user[key]));
-      await insert({ table, data });
+      insert({ table, data });
     }
 
     dispatch("next");
