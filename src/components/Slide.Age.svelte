@@ -21,7 +21,7 @@
     if (!$user.story && $user.age && $user.toss && $user.spot && $user.roll) {
       const table = "readers";
       const data = {};
-      const keys = ["age", "toss", "spot", "roll"];
+      const keys = ["age", "toss", "spot", "roll", "guess"];
       keys.forEach((key) => (data[key] = $user[key]));
       insert({ table, data });
     }
