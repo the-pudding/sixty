@@ -9,20 +9,25 @@
   // import Guess from "$components/Slide.Guess.svelte";
   // import Results from "$components/Slide.Results.svelte";
   import localStorage from "$utils/localStorage.js";
+  import computeComplexity from "$utils/computeComplexity.js";
   import copy from "$data/doc.json";
   import { user } from "$stores/misc.js";
 
   const slideComponents = { Text, Intro, Test, Age };
   const storagePrefix = "pudding_sixty";
-  const storageKeys = ["story", "rightwrong", "guess", "age", "toss", "roll", "spot"];
+  const storageKeys = ["story", "rightwrong", "guess", "score", "age", "toss", "roll", "spot"];
   const ageIndex = 4;
   const jumpIndex = 5;
 
   let jumped;
   let slide = 0;
 
-  const getGuess = () => {
-    // TODO arjun
+  const getGuess = async () => {
+    const SIXTY_CUTOFF = 0.745;
+
+    const score = await computeComplexity($user.toss, $user.roll, $user.spot);
+    $user.score = score;
+    $user.guess = score < SIXTY_CUTOFF;
     console.log($user);
   };
 
