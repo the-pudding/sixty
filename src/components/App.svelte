@@ -22,6 +22,7 @@
   let slide = 0;
 
   const getGuess = () => {
+    // TODO arjun
     console.log($user);
   };
 
