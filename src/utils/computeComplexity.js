@@ -35,7 +35,7 @@ const computeScore = async (string, task) => {
     return normalized_score;
 }
 
-export default async function conscomputeCombinedScore(string_toss, string_roll, string_spot) {
+export default async function computeCombinedScore(string_toss, string_roll, string_spot) {
     const [toss_score, roll_score, spot_score] = await Promise.all([
         computeScore(string_toss, "toss"),
         computeScore(string_roll, "roll"),
