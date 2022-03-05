@@ -30,6 +30,11 @@ const normalizeString = (str) => {
 const computeScore = async (string, task) => {
     const normalized_string = normalizeString(string);
     const raw_score = await getScore(normalized_string, a[task]);
+
+    if (!raw_score) {
+        return null;
+    }
+
     const normalized_score = (raw_score - m[task]) / s[task];
 
     return normalized_score;
@@ -41,6 +46,10 @@ export default async function computeCombinedScore(string_toss, string_roll, str
         computeScore(string_roll, "roll"),
         computeScore(string_spot, "spot"),
     ]);
+
+    if (!toss_score) {
+        return (roll_score + spot_score) / 2;
+    }
 
     return (toss_score + roll_score + spot_score) / 3;
 }
