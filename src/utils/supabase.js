@@ -14,10 +14,15 @@ export const getScore = async (id, a) => {
 	const response = await supabase
 		.from('acss')
 		.select(`K_${a}`)
-		.eq('id', id)
+		.eq('id', id);
+
+	const score = response.data[0][`K_${a}`];
 
 	if (response.error) console.log(response.error);
-	if (response.data.length === 0) console.log('This entry is not available in the database');
+	if (!score) {
+		console.log(`String ${id} with ${a} alphabets is not available in the database`);
+		return null;
+	}
 
-	return response.data[0][`K_${a}`];
+	return score;
 }
