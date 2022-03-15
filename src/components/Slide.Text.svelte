@@ -8,8 +8,6 @@
   export let title;
   export let text;
   export let graphic;
-
-  console.log(graphic);
 </script>
 
 <div class="text">

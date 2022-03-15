@@ -1,5 +1,4 @@
 <figure>
-  <p class="description"><small>A <strong class="good">good</strong> response</small></p>
   <p class="good">
     <span>3</span>
     <span>1</span>
@@ -12,7 +11,6 @@
     <span>4</span>
     <span>1</span>
   </p>
-  <p class="description"><small>and a <strong class="bad">bad</strong> response</small></p>
   <p class="bad">
     <span>1</span>
     <span>1</span>
@@ -29,24 +27,23 @@
 
 <style>
   figure {
-    /* display: flex; */
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
   }
 
   p {
     text-align: center;
+    display: inline-block;
+    padding: 0 0.5em;
   }
 
-  .good {
-    color: var(--color-green);
+  :global(.good) {
+    background-color: var(--color-green);
   }
 
-  .bad {
-    color: var(--color-red);
-  }
-
-  p.good,
-  p.bad {
-    margin: 0;
+  :global(.bad) {
+    background-color: var(--color-red);
   }
 
   .description {
