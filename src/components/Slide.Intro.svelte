@@ -40,7 +40,7 @@
   <button {disabled} class="jump" on:click={onJump}><small>{jump}</small></button>
 </p>
 
-<small class="byline">{@html byline}</small>
+<div class="byline">{@html byline}</div>
 
 <style>
   h1 {
@@ -49,8 +49,9 @@
 
   .byline {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    font-size: 0.625em;
+    top: 1rem;
+    right: 1rem;
   }
 
   button {

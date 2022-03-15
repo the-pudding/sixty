@@ -1,9 +1,11 @@
 <div class="charts">
   <figure>
+    <h3><strong>Original Study Reproduction</strong></h3>
     <img src="https://via.placeholder.com/640x640.png" alt="placeholder" />
   </figure>
 
   <figure>
+    <h3><strong>Bad Responses Excluded</strong></h3>
     <img src="https://via.placeholder.com/640x640.png" alt="placeholder" />
   </figure>
 </div>
@@ -20,5 +22,9 @@
 
   figure:last-of-type {
     margin-left: 1rem;
+  }
+
+  h3 {
+    font-size: 1em;
   }
 </style>

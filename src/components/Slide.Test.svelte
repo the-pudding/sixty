@@ -101,10 +101,6 @@
   }
 
   :global(.jumped .test),
-  :global(.jumped .prep) {
-    display: none;
-  }
-
   .done {
     pointer-events: none;
     cursor: not-allowed;

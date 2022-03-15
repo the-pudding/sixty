@@ -4,7 +4,7 @@
 
 <header>
   <div class="wordmark">
-    An experiment by
+    An experiment from
     <a href="https://pudding.cool" aria-label="The Pudding">{@html wordmark}</a>
   </div>
 </header>
@@ -12,12 +12,9 @@
 <style>
   header {
     position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0.75rem 1rem;
-    width: 100%;
-
     font-size: 0.625em;
+    top: 1rem;
+    left: 1rem;
   }
   .wordmark {
     max-width: 10em;

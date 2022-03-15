@@ -5,15 +5,11 @@
 
   const slideComponents = { Instructions, Bad, Findings };
 
-  export let title;
   export let text;
   export let graphic;
 </script>
 
 <div class="text">
-  {#if title}
-    <h3><strong>{title}</strong></h3>
-  {/if}
   <p>{@html text}</p>
   {#if graphic}
     <svelte:component this={slideComponents[graphic]} />

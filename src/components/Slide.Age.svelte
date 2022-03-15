@@ -29,11 +29,15 @@
     dispatch("next");
   };
 
+  $: waiting = $user.guess === undefined;
+  $: custom = $user.guess ? "over 60" : "under 60";
   $: disabled = value === 0 || done;
 </script>
 
 <div class="age">
-  <p>{guess} {"over 60"}. {prompt}</p>
+  <p>
+    {guess}{#if waiting}...{:else}&nbsp;<mark>{custom}</mark>{/if}. {prompt}
+  </p>
   <div class="range">
     <Range disabled={done} min={0} max={120} bind:value showValue={true} />
   </div>
@@ -66,6 +70,12 @@
   }
 
   summary {
-    line-height: 1;
+    cursor: pointer;
+  }
+
+  details div {
+    background: var(--color-gray-100);
+    padding: 1rem;
+    margin-top: 1rem;
   }
 </style>

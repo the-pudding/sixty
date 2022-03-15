@@ -20,6 +20,7 @@
   const jumpIndex = 5;
 
   let jumped;
+  let skipped;
   let slide = 0;
 
   const getGuess = async () => {
@@ -28,6 +29,7 @@
     const score = await computeComplexity($user.toss, $user.roll, $user.spot);
     $user.score = score;
     $user.guess = score < SIXTY_CUTOFF;
+    $user.rightwrong = $user.guess ? $user.age > 60 : $user.age <= 60;
     console.log($user);
   };
 
@@ -47,6 +49,7 @@
 
   const onJump = () => {
     slide = jumpIndex;
+    skipped = true;
     scroll();
   };
 
@@ -61,7 +64,9 @@
   onMount(() => {
     // TODO remove
     storageKeys.forEach((key) => localStorage.remove(`${storagePrefix}_${key}`));
-    storageKeys.forEach((key) => ($user[key] = localStorage.get(`${storagePrefix}_${key}`)));
+    storageKeys.forEach(
+      (key) => ($user[key] = localStorage.get(`${storagePrefix}_${key}`) ?? undefined)
+    );
   });
 </script>
 
@@ -72,6 +77,7 @@
     id={props.id ?? `slide-${i}`}
     class:visible={jumped || slide >= i}
     class:jumped
+    class:skipped
   >
     <svelte:component
       this={slideComponents[props.component] ?? Text}
@@ -93,5 +99,15 @@
 
   .visible {
     display: block;
+  }
+
+  :global(.jumped .age) {
+    display: block;
+  }
+
+  :global(.skipped .age),
+  :global(.skipped .test),
+  :global(.skipped .prep) {
+    display: none;
   }
 </style>

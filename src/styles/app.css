@@ -89,3 +89,7 @@ button.jump {
 	padding: 0;
 	margin: 0;
 }
+
+figure {
+	font-family: var(--sans);
+}
