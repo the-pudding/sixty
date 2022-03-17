@@ -1,9 +1,13 @@
 <script>
   import { max, extent } from "d3";
   import Scatter from "$components/Scatter.svelte";
+  import Toggle from "$components/helpers/Toggle.svelte";
   import raw from "$data/scatter.csv";
 
-  const clean = raw.map((d) => ({
+  export let note;
+
+  const clean = raw.map((d, id) => ({
+    id,
     age: +d.age,
     score: +d.score,
     fixed: +d.fixed,
@@ -18,31 +22,36 @@
 
   const studyData = clean;
   const excludeData = studyData.filter((d) => !d.exclude);
+
+  let value = "off";
+  $: data = clean.filter((d) => (value === "on" ? !d.exclude : true));
 </script>
 
-<div class="charts">
-  <figure>
-    <h3><strong>Original Study Reproduction</strong></h3>
-    <Scatter data={studyData} {domainY} {domainX} {propX} {propY} />
-  </figure>
-
-  <figure>
-    <h3><strong>Bad Responses Fixed</strong></h3>
-    <Scatter data={studyData} {domainY} {domainX} {propX} propY={"fixed"} />
-  </figure>
-</div>
+<figure>
+  <div>
+    <h3><strong>Complexity Scores by Age</strong></h3>
+    <Toggle label="Exclude Bad Responses" style="slider" options={["on", "off"]} bind:value />
+  </div>
+  <Scatter {data} {domainY} {domainX} {propX} {propY} />
+  <figcaption>Note: {note}</figcaption>
+</figure>
 
 <style>
-  .charts {
-    display: flex;
-    margin-top: 2rem;
-  }
-
   figure {
-    width: 50%;
+    margin: 2rem auto;
+  }
+  figcaption {
+    margin-top: 1rem;
+    font-size: 0.8em;
   }
 
   h3 {
     font-size: 1em;
+    text-align: center;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
   }
 </style>

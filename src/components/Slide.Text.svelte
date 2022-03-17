@@ -7,12 +7,13 @@
 
   export let text;
   export let graphic;
+  export let note;
 </script>
 
 <div class="text">
   <p>{@html text}</p>
   {#if graphic}
-    <svelte:component this={slideComponents[graphic]} />
+    <svelte:component this={slideComponents[graphic]} {note} />
   {/if}
 </div>
 

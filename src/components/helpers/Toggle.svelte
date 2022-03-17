@@ -30,7 +30,12 @@
   .toggle button,
   .label {
     font-family: inherit;
-    font-size: 1em;
+    font-size: 0.8em;
+  }
+
+  .label {
+    display: block;
+    line-height: 1.2;
   }
 
   .toggle--inner [role="switch"][aria-checked="true"] :first-child,
@@ -61,6 +66,7 @@
 
   .toggle--slider {
     display: flex;
+    justify-content: center;
     align-items: center;
   }
 
