@@ -9,16 +9,21 @@
   const clean = raw.map((d, id) => ({
     id,
     age: +d.age,
+    toss: +d.toss,
+    roll: +d.roll,
+    spot: +d.spot,
     score: +d.score,
     fixed: +d.fixed,
     exclude: +d.fixed !== +d.score
   }));
 
-  const domainY = extent(clean, (d) => d.score);
-  const maxX = max(clean, (d) => d.age);
-  const domainX = [0, maxX];
+  clean.sort((a, b) => a.exclude - b.exclude);
   const propX = "age";
-  const propY = "score";
+  const propY = "toss";
+
+  const domainY = extent(clean, (d) => d[propY]);
+  const maxX = max(clean, (d) => d[propX]);
+  const domainX = [0, maxX];
 
   const studyData = clean;
   const excludeData = studyData.filter((d) => !d.exclude);

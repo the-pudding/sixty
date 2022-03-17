@@ -21,7 +21,7 @@
     .range([1 - margin * 2, 0]);
 
   const ticksX = scaleX.ticks(10);
-  const ticksY = scaleY.ticks(10);
+  const ticksY = scaleY.ticks(5);
 
   const lineGenerator = line()
     .x((d) => scaleX(d[0]))
@@ -78,12 +78,12 @@
 
   circle {
     stroke-width: 0.001;
-    stroke: var(--color-gray-900);
+    /* stroke: var(--color-gray-900); */
     fill: var(--color-gray-300);
   }
 
   .exclude {
-    stroke: var(--color-gray-600);
+    /* stroke: var(--color-gray-600); */
     fill: var(--color-red);
   }
 

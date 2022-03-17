@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from "@supabase/supabase-js"
 
 const supabaseUrl = import.meta.env.VITE_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY;
@@ -12,9 +12,9 @@ export const insert = async ({ table, data }) => {
 
 export const getScore = async (id, a) => {
 	const response = await supabase
-		.from('acss')
+		.from("acss")
 		.select(`K_${a}`)
-		.eq('id', id);
+		.eq("id", id);
 
 	const score = response.data[0][`K_${a}`];
 
@@ -25,4 +25,25 @@ export const getScore = async (id, a) => {
 	}
 
 	return score;
-}
+};
+
+export const getTotal = async () => {
+	// filter valid
+	const response = await supabase
+		.from("readers")
+		.select("id", { count: "exact", head: true });
+
+	if (response.error) console.log(response.error);
+	return response.count;
+};
+
+export const getCorrect = async () => {
+	// filter valid
+	const response = await supabase
+		.from("readers")
+		.select("id", { count: "exact", head: true })
+		.eq("guess", true);
+
+	if (response.error) console.log(response.error);
+	return response.count;
+};

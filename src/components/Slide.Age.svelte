@@ -14,6 +14,11 @@
   let value = 0;
   let done;
 
+  const checkValid = (keys) => {
+    const invalid = keys.map((key) => /^(.)\1+$/.test($user[key])).find((d) => !d);
+    return !invalid;
+  };
+
   const onClick = async () => {
     done = true;
     $user.age = value;
@@ -21,9 +26,12 @@
     if (!$user.story && $user.age && $user.toss && $user.spot && $user.roll) {
       const table = "readers";
       const data = {};
-      const keys = ["age", "toss", "spot", "roll", "guess"];
-      keys.forEach((key) => (data[key] = $user[key]));
-      insert({ table, data });
+      const keys = ["toss", "spot", "roll", "age", "guess"];
+      const valid = checkValid(keys.slice(0, 3));
+      if (valid) {
+        keys.forEach((key) => (data[key] = $user[key]));
+        insert({ table, data });
+      }
     }
 
     dispatch("next");

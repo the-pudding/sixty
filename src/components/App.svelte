@@ -61,7 +61,7 @@
   $: jumped = slide >= jumpIndex;
   $: updateStorage($user);
 
-  onMount(() => {
+  onMount(async () => {
     // TODO remove
     storageKeys.forEach((key) => localStorage.remove(`${storagePrefix}_${key}`));
     storageKeys.forEach(

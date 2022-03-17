@@ -2,8 +2,9 @@
   import Instructions from "$components/Graphic.Instructions.svelte";
   import Bad from "$components/Graphic.Bad.svelte";
   import Findings from "$components/Graphic.Findings.svelte";
+  import Correct from "$components/Graphic.Correct.svelte";
 
-  const slideComponents = { Instructions, Bad, Findings };
+  const slideComponents = { Instructions, Bad, Findings, Correct };
 
   export let text;
   export let graphic;
@@ -11,7 +12,9 @@
 </script>
 
 <div class="text">
-  <p>{@html text}</p>
+  {#if text}
+    <p>{@html text}</p>
+  {/if}
   {#if graphic}
     <svelte:component this={slideComponents[graphic]} {note} />
   {/if}
