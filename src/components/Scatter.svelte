@@ -1,5 +1,6 @@
 <script>
-  import { scaleLinear } from "d3";
+  import { scaleLinear, line } from "d3";
+  import { regressionLoess } from "d3-regression";
   export let data;
   export let propX;
   export let propY;
@@ -7,8 +8,9 @@
   export let domainY;
   export let r = 0.01;
 
+  const BANDWIDTH = 0.8;
   const margin = r * 8;
-  const marginHalf = margin * 0.5;
+  const marginHalf = margin * 0.75;
 
   const scaleX = scaleLinear()
     .domain(domainX)
@@ -20,6 +22,15 @@
 
   const ticksX = scaleX.ticks(10);
   const ticksY = scaleY.ticks(10);
+
+  const lineGenerator = line()
+    .x((d) => scaleX(d[0]))
+    .y((d) => scaleY(d[1]));
+
+  const lineLoess = regressionLoess()
+    .x((d) => d[propX])
+    .y((d) => d[propY])
+    .bandwidth(BANDWIDTH);
 </script>
 
 <svg viewbox="0 0 1 1">
@@ -47,12 +58,16 @@
     <text x="0.5" y={1 - 0.01} text-anchor="middle">{propX}</text>
   </g>
 
-  <g class="vis" transform="translate({marginHalf}, {marginHalf})">
+  <g class="dots" transform="translate({marginHalf}, {marginHalf})">
     {#each data as d (d.id)}
       {@const cx = scaleX(d[propX])}
       {@const cy = scaleY(d[propY])}
       <circle {cx} {cy} {r} class:exclude={d.exclude} />
     {/each}
+  </g>
+
+  <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
+    <path d={lineGenerator(lineLoess(data))} />
   </g>
 </svg>
 
@@ -81,6 +96,12 @@
     stroke: var(--color-gray-500);
     stroke-width: 0.001;
     stroke-dasharray: 0.0002em 0.0002em;
+  }
+
+  path {
+    fill: none;
+    stroke: var(--color-gray-900);
+    stroke-width: 0.002;
   }
 
   .axis-x .tick:first-of-type {
