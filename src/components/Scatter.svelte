@@ -1,6 +1,6 @@
 <script>
   import { scaleLinear, line } from "d3";
-  import { regressionLoess } from "d3-regression";
+  import regressionLoess from "$utils/loess";
   export let data;
   export let propX;
   export let propY;
@@ -8,7 +8,7 @@
   export let domainY;
   export let r = 0.01;
 
-  const BANDWIDTH = 0.8;
+  const BANDWIDTH = 0.75;
   const margin = r * 8;
   const marginHalf = margin * 0.75;
 
