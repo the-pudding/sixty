@@ -1,12 +1,11 @@
 <script>
-  import { max, extent } from "d3";
-  import Scatter from "$components/Scatter.svelte";
   import Toggle from "$components/helpers/Toggle.svelte";
+  import Complexity from "$components/Complexity.svelte";
   import raw from "$data/scatter.csv";
 
   export let note;
 
-  const clean = raw.map((d, id) => ({
+  const data = raw.map((d, id) => ({
     id,
     age: +d.age,
     toss: +d.toss,
@@ -17,34 +16,44 @@
     exclude: +d.fixed !== +d.score
   }));
 
-  clean.sort((a, b) => a.exclude - b.exclude);
-  const propX = "age";
-  const propY = "toss";
-
-  const domainY = extent(clean, (d) => d[propY]);
-  const maxX = max(clean, (d) => d[propX]);
-  const domainX = [0, maxX];
-
-  const studyData = clean;
-  const excludeData = studyData.filter((d) => !d.exclude);
+  data.sort((a, b) => a.exclude - b.exclude);
 
   let value = "off";
-  $: data = clean.filter((d) => (value === "on" ? !d.exclude : true));
 </script>
 
 <figure>
-  <div>
+  <div class="info">
     <h3><strong>Complexity Scores by Age</strong></h3>
     <Toggle label="Exclude Bad Responses" style="slider" options={["on", "off"]} bind:value />
   </div>
-  <Scatter {data} {domainY} {domainX} {propX} {propY} />
+  <Complexity {data} propY="score" exclude={value} />
   <figcaption>Note: {note}</figcaption>
 </figure>
+
+<Toggle label="Exclude Bad Responses" style="slider" options={["on", "off"]} bind:value />
+
+<div class="multiple">
+  <figure>
+    <p><small>Toss</small></p>
+    <Complexity {data} propY="toss" exclude={value} hide={true} />
+  </figure>
+
+  <figure>
+    <p><small>Roll</small></p>
+    <Complexity {data} propY="roll" exclude={value} hide={true} />
+  </figure>
+
+  <figure>
+    <p><small>Spot</small></p>
+    <Complexity {data} propY="spot" exclude={value} hide={true} />
+  </figure>
+</div>
 
 <style>
   figure {
     margin: 2rem auto;
   }
+
   figcaption {
     margin-top: 1rem;
     font-size: 0.8em;
@@ -55,8 +64,16 @@
     text-align: center;
   }
 
-  div {
+  .info {
     display: flex;
     justify-content: space-between;
+  }
+
+  .multiple {
+    display: flex;
+  }
+
+  .multiple figure {
+    width: 33.33%;
   }
 </style>

@@ -1,5 +1,6 @@
 <script>
   import { scaleLinear, line } from "d3";
+  import { interpolatePath } from "d3-interpolate-path";
   import regressionLoess from "$utils/loess";
   export let data;
   export let propX;
@@ -7,8 +8,9 @@
   export let domainX;
   export let domainY;
   export let r = 0.01;
+  export let hide;
 
-  const BANDWIDTH = 0.75;
+  const bandwidth = 0.75;
   const margin = r * 8;
   const marginHalf = margin * 0.75;
 
@@ -30,7 +32,28 @@
   const lineLoess = regressionLoess()
     .x((d) => d[propX])
     .y((d) => d[propY])
-    .bandwidth(BANDWIDTH);
+    .bandwidth(bandwidth);
+
+  const animate = () => {
+    t += 0.05;
+    path = interpolator(t);
+    if (t < 1) requestAnimationFrame(animate);
+  };
+
+  let curTrend;
+  let path;
+  let interpolator;
+  let t;
+
+  $: {
+    const prevTrend = curTrend;
+    curTrend = lineGenerator(lineLoess(data));
+    if (prevTrend) {
+      t = 0;
+      interpolator = interpolatePath(prevTrend, curTrend);
+      animate();
+    } else path = curTrend;
+  }
 </script>
 
 <svg viewbox="0 0 1 1">
@@ -58,16 +81,19 @@
     <text x="0.5" y={1 - 0.01} text-anchor="middle">{propX}</text>
   </g>
 
-  <g class="dots" transform="translate({marginHalf}, {marginHalf})">
-    {#each data as d (d.id)}
-      {@const cx = scaleX(d[propX])}
-      {@const cy = scaleY(d[propY])}
-      <circle {cx} {cy} {r} class:exclude={d.exclude} />
-    {/each}
-  </g>
+  {#if !hide}
+    <g class="dots" transform="translate({marginHalf}, {marginHalf})">
+      {#each data as d (d.id)}
+        {@const cx = scaleX(d[propX])}
+        {@const cy = scaleY(d[propY])}
+        <circle {cx} {cy} {r} class:exclude={d.exclude} />
+      {/each}
+    </g>
+  {/if}
 
   <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
-    <path d={lineGenerator(lineLoess(data))} />
+    <path d={path} />
+    <path d={path} />
   </g>
 </svg>
 
@@ -78,13 +104,13 @@
 
   circle {
     stroke-width: 0.001;
-    /* stroke: var(--color-gray-900); */
-    fill: var(--color-gray-300);
+    stroke: var(--color-gray-400);
+    fill: var(--color-gray-100);
   }
 
   .exclude {
-    /* stroke: var(--color-gray-600); */
-    fill: var(--color-red);
+    stroke: var(--color-gray-600);
+    fill: var(--color-gray-400);
   }
 
   text {
@@ -100,8 +126,14 @@
 
   path {
     fill: none;
+    stroke: var(--color-red);
+    stroke-width: 0.005;
+    stroke-linecap: square;
+  }
+
+  path:first-of-type {
+    stroke-width: 0.007;
     stroke: var(--color-gray-900);
-    stroke-width: 0.002;
   }
 
   .axis-x .tick:first-of-type {
