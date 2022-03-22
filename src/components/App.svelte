@@ -3,6 +3,7 @@
   import { writable } from "svelte/store";
   import WIP from "$components/helpers/WIP.svelte";
   import Text from "$components/Slide.Text.svelte";
+  import Video from "$components/Slide.Video.svelte";
   import Intro from "$components/Slide.Intro.svelte";
   import Test from "$components/Slide.Test.svelte";
   import Age from "$components/Slide.Age.svelte";
@@ -11,7 +12,7 @@
   import copy from "$data/doc.json";
   import { user, jumped } from "$stores/misc.js";
 
-  const slideComponents = { Text, Intro, Test, Age };
+  const slideComponents = { Text, Intro, Test, Age, Video };
   const storagePrefix = "pudding_sixty";
   const storageKeys = ["story", "rightwrong", "guess", "score", "age", "toss", "roll", "spot"];
   const ageIndex = 4;
