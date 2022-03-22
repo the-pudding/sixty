@@ -6,12 +6,10 @@
   import Intro from "$components/Slide.Intro.svelte";
   import Test from "$components/Slide.Test.svelte";
   import Age from "$components/Slide.Age.svelte";
-  // import Guess from "$components/Slide.Guess.svelte";
-  // import Results from "$components/Slide.Results.svelte";
   import localStorage from "$utils/localStorage.js";
   import computeComplexity from "$utils/computeComplexity.js";
   import copy from "$data/doc.json";
-  import { user } from "$stores/misc.js";
+  import { user, jumped } from "$stores/misc.js";
 
   const slideComponents = { Text, Intro, Test, Age };
   const storagePrefix = "pudding_sixty";
@@ -19,7 +17,6 @@
   const ageIndex = 4;
   const jumpIndex = 5;
 
-  let jumped;
   let skipped;
   let slide = 0;
 
@@ -58,7 +55,7 @@
   };
 
   $: if (slide === ageIndex) getGuess();
-  $: jumped = slide >= jumpIndex;
+  $: $jumped = slide >= jumpIndex;
   $: updateStorage($user);
 
   onMount(async () => {
@@ -75,8 +72,8 @@
   <div
     class="slide"
     id={props.id ?? `slide-${i}`}
-    class:visible={jumped || slide >= i}
-    class:jumped
+    class:visible={$jumped || slide >= i}
+    class:jumped={$jumped}
     class:skipped
   >
     <svelte:component

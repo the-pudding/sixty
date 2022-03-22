@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { getTotal, getCorrect } from "$utils/supabase.js";
+  import { jumped } from "$stores/misc.js";
 
   const expected = 53;
   const dynamic = [
@@ -12,16 +13,17 @@
   let correct = 0;
   let i = 0;
 
-  onMount(async () => {
+  const getRate = async () => {
     const a = await getCorrect();
     const b = await getTotal();
     correct = Math.round((a / b) * 100);
     const diff = correct - expected;
     console.log(diff);
     i = diff > 2 ? 2 : diff > -2 ? 1 : 0;
-  });
+  };
 
   $: text = dynamic[i];
+  $: if ($jumped && correct === 0) getRate();
 </script>
 
 <p>
