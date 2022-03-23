@@ -8,7 +8,8 @@
   export let domainX;
   export let domainY;
   export let r = 0.01;
-  export let hide;
+  export let showValues;
+  export let showTrend;
 
   const bandwidth = 0.75;
   const margin = r * 8;
@@ -81,7 +82,7 @@
     <text x="0.5" y={1 - 0.01} text-anchor="middle">{propX}</text>
   </g>
 
-  {#if !hide}
+  {#if showValues}
     <g class="dots" transform="translate({marginHalf}, {marginHalf})">
       {#each data as d (d.id)}
         {@const cx = scaleX(d[propX])}
@@ -91,10 +92,12 @@
     </g>
   {/if}
 
-  <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
-    <path d={path} />
-    <path d={path} />
-  </g>
+  {#if showTrend}
+    <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
+      <path d={path} />
+      <path d={path} />
+    </g>
+  {/if}
 </svg>
 
 <style>

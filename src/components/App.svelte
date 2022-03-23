@@ -6,13 +6,17 @@
   import Video from "$components/Slide.Video.svelte";
   import Intro from "$components/Slide.Intro.svelte";
   import Test from "$components/Slide.Test.svelte";
+  import Instructions from "$components/Graphic.Instructions.svelte";
+  import Bad from "$components/Graphic.Bad.svelte";
+  import Findings from "$components/Graphic.Findings.svelte";
+  import Correct from "$components/Graphic.Correct.svelte";
   import Age from "$components/Slide.Age.svelte";
   import localStorage from "$utils/localStorage.js";
   import computeComplexity from "$utils/computeComplexity.js";
   import copy from "$data/doc.json";
   import { user, jumped } from "$stores/misc.js";
 
-  const slideComponents = { Text, Intro, Test, Age, Video };
+  const slideComponents = { Text, Intro, Test, Age, Video, Instructions, Bad, Findings, Correct };
   const storagePrefix = "pudding_sixty";
   const storageKeys = ["story", "rightwrong", "guess", "score", "age", "toss", "roll", "spot"];
   const ageIndex = 4;

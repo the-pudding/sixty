@@ -18,7 +18,6 @@
     const b = await getTotal();
     correct = Math.round((a / b) * 100);
     const diff = correct - expected;
-    console.log(diff);
     i = diff > 2 ? 2 : diff > -2 ? 1 : 0;
   };
 

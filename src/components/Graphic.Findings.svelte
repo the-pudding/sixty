@@ -1,9 +1,12 @@
 <script>
+  import { onMount } from "svelte";
   import Toggle from "$components/helpers/Toggle.svelte";
   import Complexity from "$components/Complexity.svelte";
+  import Scrolly from "$components/helpers/Scrolly.svelte";
   import raw from "$data/scatter.csv";
+  import viewport from "$stores/viewport.js";
 
-  export let note;
+  export let steps;
 
   const data = raw.map((d, id) => ({
     id,
@@ -19,20 +22,62 @@
   data.sort((a, b) => a.exclude - b.exclude);
 
   let value = "off";
+  let scrollIndex = 0;
+  let autoToggle = true;
+  let autoInterval;
+  let toggled;
+
+  $: height = `${$viewport.height}px`;
+  $: exclude = showToggle && value === "on";
+  $: showValues = true;
+  $: showTrend = scrollIndex > 1;
+  $: showToggle = scrollIndex > 3;
+  $: value = showToggle ? "on" : "off";
+  $: if (toggled) {
+    autoToggle = false;
+    clearInterval(autoInterval);
+  }
+
+  const onToggled = () => {
+    toggled = true;
+  };
+
+  onMount(() => {
+    autoInterval = setInterval(() => (value = value === "off" ? "on" : "off"), 3000);
+  });
 </script>
 
-<figure>
-  <div class="info">
-    <h3><strong>Complexity Scores by Age</strong></h3>
-    <Toggle label="Exclude Bad Responses" style="slider" options={["on", "off"]} bind:value />
-  </div>
-  <Complexity {data} propY="score" exclude={value} />
-  <figcaption>Note: {note}</figcaption>
-</figure>
+<section>
+  <figure>
+    <div class="info">
+      <h3><strong>Complexity Scores by Age</strong></h3>
+      {#if showToggle}
+        <Toggle
+          on:toggled={onToggled}
+          label="Exclude Bad Responses"
+          style="slider"
+          options={["on", "off"]}
+          bind:value
+        />
+      {/if}
+    </div>
 
-<Toggle label="Exclude Bad Responses" style="slider" options={["on", "off"]} bind:value />
+    <Complexity {data} propY="toss" {exclude} {showTrend} {showValues} />
+    <!-- <figcaption>Note: {note}</figcaption> -->
+  </figure>
 
-<div class="multiple">
+  <article>
+    <Scrolly bind:value={scrollIndex}>
+      {#each steps as { text }, i}
+        <div class="step" style:height class:active={scrollIndex === i}>
+          <p>{@html text}</p>
+        </div>
+      {/each}
+    </Scrolly>
+  </article>
+</section>
+
+<!-- <div class="multiple">
   <figure>
     <p><small>Toss</small></p>
     <Complexity {data} propY="toss" exclude={value} hide={true} />
@@ -47,16 +92,34 @@
     <p><small>Spot</small></p>
     <Complexity {data} propY="spot" exclude={value} hide={true} />
   </figure>
-</div>
-
+</div> -->
 <style>
+  section {
+    position: relative;
+  }
+
   figure {
+    position: sticky;
+    top: 0;
     margin: 2rem auto;
   }
 
-  figcaption {
-    margin-top: 1rem;
-    font-size: 0.8em;
+  article {
+    position: relative;
+    pointer-events: none;
+  }
+
+  .step {
+    opacity: 0.2;
+  }
+
+  .step p {
+    background: var(--color-bg);
+    padding: 1rem;
+  }
+
+  .step.active {
+    opacity: 1;
   }
 
   h3 {
@@ -67,13 +130,5 @@
   .info {
     display: flex;
     justify-content: space-between;
-  }
-
-  .multiple {
-    display: flex;
-  }
-
-  .multiple figure {
-    width: 33.33%;
   }
 </style>

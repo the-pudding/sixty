@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   export let label;
   export let style = "inner";
   export let options = ["on", "off"];
@@ -7,13 +8,17 @@
   let checked = value === options[0];
 
   const id = `toggle-${Math.floor(Math.random() * 1000000)}`;
+  const dispatch = createEventDispatcher();
 
   const handleClick = (event) => {
+    dispatch("toggled");
     const target = event.target;
     const state = target.getAttribute("aria-checked");
     checked = state === "true" ? false : true;
     value = checked ? options[0] : options[1];
   };
+
+  $: checked = value === options[0];
 </script>
 
 <div class="toggle toggle--{style}">

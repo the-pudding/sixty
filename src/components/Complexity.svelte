@@ -4,15 +4,17 @@
   export let propY;
   export let data;
   export let exclude;
-  export let hide;
+  export let showValues;
+  export let showTrend;
 
   const propX = "age";
 
   const domainY = extent(data, (d) => d[propY]);
+  // console.log(domainY);
   const maxX = max(data, (d) => d[propX]);
   const domainX = [0, maxX];
 
-  $: render = data.filter((d) => (exclude === "on" ? !d.exclude : true));
+  $: render = data.filter((d) => (exclude ? d[propY] !== domainY[0] : true));
 </script>
 
-<Scatter data={render} {domainY} {domainX} {propX} {propY} {hide} />
+<Scatter data={render} {domainY} {domainX} {propX} {propY} {showValues} {showTrend} />
