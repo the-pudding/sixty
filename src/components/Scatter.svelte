@@ -7,9 +7,11 @@
   export let propY;
   export let domainX;
   export let domainY;
-  export let r = 0.01;
   export let showValues;
   export let showTrend;
+  export let showExample;
+  export let showBad;
+  export let r = 0.01;
 
   const bandwidth = 0.75;
   const margin = r * 8;
@@ -63,7 +65,7 @@
       {#each ticksX as tick}
         {@const x = scaleX(tick)}
         <g class="tick" transform="translate({x}, 1)">
-          <line x1="0" x2="0" y1={-marginHalf} y2={-1 + marginHalf} />
+          <line x1="0" x2="0" y1={-marginHalf / 2} y2={-1 + margin + marginHalf / 2} />
           <text x="0" y="0" text-anchor="middle">{tick}</text>
         </g>
       {/each}
@@ -87,7 +89,7 @@
       {#each data as d (d.id)}
         {@const cx = scaleX(d[propX])}
         {@const cy = scaleY(d[propY])}
-        <circle {cx} {cy} {r} class:exclude={d.exclude} />
+        <circle {cx} {cy} {r} class:exclude={showBad && d.exclude} />
       {/each}
     </g>
   {/if}
@@ -96,6 +98,16 @@
     <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
       <path d={path} />
       <path d={path} />
+    </g>
+  {/if}
+
+  {#if showExample}
+    <g class="examples" transform="translate({marginHalf}, {marginHalf})">
+      {#each data.filter((d) => d.highlight) as d (d.id)}
+        {@const x = scaleX(d[propX])}
+        {@const y = scaleY(d[propY])}
+        <text {x} {y} text-anchor="middle">{d.highlight}</text>
+      {/each}
     </g>
   {/if}
 </svg>

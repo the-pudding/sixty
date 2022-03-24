@@ -6,6 +6,8 @@
   export let exclude;
   export let showValues;
   export let showTrend;
+  export let showExample;
+  export let showBad;
 
   const propX = "age";
 
@@ -17,4 +19,14 @@
   $: render = data.filter((d) => (exclude ? d[propY] !== domainY[0] : true));
 </script>
 
-<Scatter data={render} {domainY} {domainX} {propX} {propY} {showValues} {showTrend} />
+<Scatter
+  data={render}
+  {domainY}
+  {domainX}
+  {propX}
+  {propY}
+  {showValues}
+  {showTrend}
+  {showExample}
+  {showBad}
+/>

@@ -8,6 +8,32 @@
 
   export let steps;
 
+  const propY = "toss";
+  const bad = -4.42;
+
+  const getHighlight = (age, toss) => {
+    const match = examples.find((d) => d.age === age && d.toss === toss);
+    return match ? match.value : undefined;
+  };
+
+  const examples = [
+    {
+      age: 14,
+      toss: 0.01,
+      value: "HHHHTTTTHHHH"
+    },
+    {
+      age: 42,
+      toss: 2.72,
+      value: "HHHHTTTTHHHH"
+    },
+    {
+      age: 70,
+      toss: -2.43,
+      value: "HHHHTTTTHHHH"
+    }
+  ];
+
   const data = raw.map((d, id) => ({
     id,
     age: +d.age,
@@ -16,7 +42,8 @@
     spot: +d.spot,
     score: +d.score,
     fixed: +d.fixed,
-    exclude: +d.fixed !== +d.score
+    exclude: +d.toss === bad,
+    highlight: getHighlight(+d.age, +d.toss)
   }));
 
   data.sort((a, b) => a.exclude - b.exclude);
@@ -30,7 +57,9 @@
   $: height = `${$viewport.height}px`;
   $: exclude = showToggle && value === "on";
   $: showValues = true;
+  $: showExample = scrollIndex === 0;
   $: showTrend = scrollIndex > 1;
+  $: showBad = scrollIndex > 2;
   $: showToggle = scrollIndex > 3;
   $: value = showToggle ? "on" : "off";
   $: if (toggled) {
@@ -62,7 +91,7 @@
       {/if}
     </div>
 
-    <Complexity {data} propY="toss" {exclude} {showTrend} {showValues} />
+    <Complexity {propY} {data} {exclude} {showTrend} {showValues} {showExample} {showBad} />
     <!-- <figcaption>Note: {note}</figcaption> -->
   </figure>
 
