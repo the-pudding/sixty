@@ -29,8 +29,12 @@
 
   const getGuess = async () => {
     const SIXTY_CUTOFF = 0.745;
-
-    const score = await computeComplexity($user.toss, $user.roll, $user.spot);
+    const [score, tossScore, rollScore, spotScore] = await computeComplexity(
+      $user.toss,
+      $user.roll,
+      $user.spot
+    );
+    $user.tossScore = tossScore;
     $user.score = score;
     $user.guess = score < SIXTY_CUTOFF;
     $user.rightwrong = $user.guess ? $user.age > 60 : $user.age <= 60;
