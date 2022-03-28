@@ -51,5 +51,5 @@ export default async function computeCombinedScore(string_toss, string_roll, str
         return (roll_score + spot_score) / 2;
     }
 
-    return (toss_score + roll_score + spot_score) / 3;
+    return [(toss_score + roll_score + spot_score) / 3, toss_score, roll_score, spot_score];
 }
