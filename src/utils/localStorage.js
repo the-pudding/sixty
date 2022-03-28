@@ -1,32 +1,22 @@
-let hasStorage;
-
-const isReady = () => {
-	if (hasStorage !== undefined) return hasStorage;
-
-	try {
-		const storage = window["localStorage"];
-		const x = '__storage_test__';
-		storage.setItem(x, x);
-		storage.removeItem(x);
-		hasStorage = true;
-	} catch (e) {
-		hasStorage = false;
-	}
-};
+import { browser } from "$app/env";
 
 const remove = (key) => {
-	if (!isReady()) return;
+	if (!browser) return;
 	localStorage.removeItem(key);
 };
 
 const set = (key, value) => {
-	if (!isReady()) return;
-	localStorage.setItem(key, JSON.stringify(value));
+	if (!browser) return;
+	localStorage.setItem(key, value);
 };
 
 const get = (key) => {
-	if (!isReady()) return;
-	return JSON.parse(localStorage.getItem(key));
+	if (!browser) return;
+	const value = localStorage.getItem(key);
+	if (["undefined", "null", ""].includes(value)) return undefined;
+	else if (value === "false") return false;
+	else if (value === "true") return true;
+	return value;
 };
 
 export default {

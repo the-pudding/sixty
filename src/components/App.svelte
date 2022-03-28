@@ -24,6 +24,8 @@
 
   let skipped;
   let slide = 0;
+  let mounted = false;
+  let repeatUser = false;
 
   const getGuess = async () => {
     const SIXTY_CUTOFF = 0.745;
@@ -55,20 +57,27 @@
     scroll();
   };
 
-  const updateStorage = (store) => {
-    Object.keys(store).forEach((key) => localStorage.set(`${storagePrefix}_${key}`, store[key]));
+  const updateStorage = () => {
+    if (!mounted) return;
+    storageKeys.forEach((key) => {
+      localStorage.set(`${storagePrefix}_${key}`, $user[key]);
+    });
   };
 
   $: if (slide === ageIndex) getGuess();
   $: $jumped = slide >= jumpIndex;
+  $: $user.story = !user.story && $jumped;
   $: updateStorage($user);
 
-  onMount(async () => {
+  onMount(() => {
     // TODO remove
-    storageKeys.forEach((key) => localStorage.remove(`${storagePrefix}_${key}`));
-    storageKeys.forEach(
-      (key) => ($user[key] = localStorage.get(`${storagePrefix}_${key}`) ?? undefined)
-    );
+    // storageKeys.forEach((key) => localStorage.remove(`${storagePrefix}_${key}`));
+    // console.log("story", localStorage.get("pudding_sixty_story"));
+    storageKeys.forEach((key) => {
+      $user[key] = localStorage.get(`${storagePrefix}_${key}`);
+    });
+    repeatUser = $user.story;
+    mounted = true;
   });
 </script>
 
@@ -84,6 +93,7 @@
     <svelte:component
       this={slideComponents[props.component] ?? Text}
       {...props}
+      {repeatUser}
       on:next={onNext}
       on:jump={onJump}
     />

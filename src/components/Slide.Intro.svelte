@@ -9,6 +9,7 @@
   export let repeat;
   export let jump;
   export let byline;
+  export let repeatUser;
 
   const dispatch = createEventDispatcher();
 
@@ -29,7 +30,7 @@
 <h1>{hed}</h1>
 <p>{problem}</p>
 <p>{prompt}</p>
-{#if $user.story}
+{#if repeatUser}
   <p class="repeat">
     {@html repeat}
   </p>

@@ -1,10 +1,12 @@
 <script>
   import { onMount } from "svelte";
+  import { ascending } from "d3";
   import Toggle from "$components/helpers/Toggle.svelte";
   import Complexity from "$components/Complexity.svelte";
   import Scrolly from "$components/helpers/Scrolly.svelte";
   import raw from "$data/scatter.csv";
   import viewport from "$stores/viewport.js";
+  import { user } from "$stores/misc.js";
 
   export let steps;
 
@@ -18,19 +20,19 @@
 
   const examples = [
     {
-      age: 14,
-      toss: 0.01,
-      value: "HHHHTTTTHHHH"
+      age: 15,
+      toss: 0.17,
+      value: "TTHHTHHHHHHH"
     },
     {
       age: 42,
       toss: 2.72,
-      value: "HHHHTTTTHHHH"
+      value: "HHTHTTTHHHTT"
     },
     {
-      age: 70,
+      age: 72,
       toss: -2.43,
-      value: "HHHHTTTTHHHH"
+      value: "HTTHTTTTTTTT"
     }
   ];
 
@@ -46,7 +48,7 @@
     highlight: getHighlight(+d.age, +d.toss)
   }));
 
-  data.sort((a, b) => a.exclude - b.exclude);
+  data.sort((a, b) => ascending(!!a.highlight, !!b.highlight));
 
   let value = "off";
   let scrollIndex = 0;
@@ -98,7 +100,7 @@
   <article>
     <Scrolly bind:value={scrollIndex}>
       {#each steps as { text }, i}
-        <div class="step" style:height class:active={scrollIndex === i}>
+        <div class="step" class:active={scrollIndex === i} style:height>
           <p>{@html text}</p>
         </div>
       {/each}

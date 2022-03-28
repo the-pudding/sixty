@@ -89,7 +89,13 @@
       {#each data as d (d.id)}
         {@const cx = scaleX(d[propX])}
         {@const cy = scaleY(d[propY])}
-        <circle {cx} {cy} {r} class:exclude={showBad && d.exclude} />
+        <circle
+          {cx}
+          {cy}
+          {r}
+          class:exclude={showBad && d.exclude}
+          class:highlight={d.highlight && showExample}
+        />
       {/each}
     </g>
   {/if}
@@ -106,7 +112,7 @@
       {#each data.filter((d) => d.highlight) as d (d.id)}
         {@const x = scaleX(d[propX])}
         {@const y = scaleY(d[propY])}
-        <text {x} {y} text-anchor="middle">{d.highlight}</text>
+        <text {x} {y} dy={-0.015} text-anchor="middle">{d.highlight}</text>
       {/each}
     </g>
   {/if}
@@ -126,6 +132,10 @@
   .exclude {
     stroke: var(--color-gray-600);
     fill: var(--color-gray-400);
+  }
+
+  .highlight {
+    fill: var(--color-red);
   }
 
   text {
