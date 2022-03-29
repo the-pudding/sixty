@@ -207,4 +207,8 @@
   :global(mark.user) {
     background: var(--color-green);
   }
+
+  .hide {
+    display: none;
+  }
 </style>
