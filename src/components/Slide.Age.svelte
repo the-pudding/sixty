@@ -83,8 +83,9 @@
   }
 
   details div {
-    background: var(--color-gray-100);
+    background: var(--color-pink);
     padding: 1rem;
     margin-top: 1rem;
+    border: 2px solid var(--color-fg);
   }
 </style>

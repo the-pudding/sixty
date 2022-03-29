@@ -7,8 +7,8 @@
 
 <style>
   blockquote {
-    background: var(--color-gray-100);
-    margin-top: 1.5em;
+    background: var(--color-highlight);
+    border: 2px solid var(--color-form-bg);
     padding: 0.5em 1em;
   }
 </style>

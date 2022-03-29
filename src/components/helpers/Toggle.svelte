@@ -47,14 +47,11 @@
   [role="switch"][aria-checked="false"] :last-child {
     display: inline-block;
     border-radius: 4px;
-    background: var(--color-gray-900);
-    color: var(--color-gray-100);
   }
 
   .toggle--inner button {
     padding: 0.5em;
-    background-color: var(--color-white);
-    border: 2px solid var(--color-gray-900);
+    background-color: var(--color-form-bg);
   }
 
   .toggle--inner button span {
@@ -80,7 +77,8 @@
     height: 2em;
     position: relative;
     margin-left: 0.5em;
-    background: var(--color-gray-300);
+    background: var(--color-gray-white);
+    outline: 2px solid var(--color-fg);
   }
 
   .toggle--slider button:focus {
@@ -92,14 +90,14 @@
     position: absolute;
     width: 1.5em;
     height: 1.5em;
-    background: var(--color-white);
+    background: var(--color-form-bg);
     border-radius: 4px;
     top: 0.25em;
     right: 1.75em;
   }
 
   .toggle--slider button[aria-checked="true"] {
-    background-color: var(--color-gray-900);
+    background-color: var(--color-green);
   }
 
   .toggle--slider button[aria-checked="true"]::before {

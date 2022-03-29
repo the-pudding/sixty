@@ -68,7 +68,7 @@
 </div>
 
 <div class="test test--{name}" class:done>
-  <p class="challenge"><small>Challege {index} of 3</small></p>
+  <p class="challenge"><mark><small>Challege {index} of 3</small></mark></p>
   <p class="prompt">{@html prompt} <span><mark>{left}</mark> choice{suffix} left.</span></p>
 
   <div class="options">
@@ -98,6 +98,11 @@
   .test {
     --sz: 4.5em;
     font-family: var(--sans);
+    text-align: center;
+  }
+
+  .challenge {
+    margin-top: 2rem;
   }
 
   :global(.jumped .test),
@@ -108,21 +113,25 @@
   }
 
   .prep small {
-    color: var(--color-gray-600);
+    color: var(--color-rose-black);
   }
 
   .test small {
     text-transform: uppercase;
-    color: var(--color-gray-600);
+    color: var(--color-rose-black);
   }
 
   p {
     margin-top: 0;
   }
 
+  .prompt {
+    text-align: left;
+  }
+
   .prompt mark {
     display: inline-block;
-    width: 1.75em;
+    width: 2em;
     text-align: center;
   }
 
@@ -130,13 +139,19 @@
     display: inline-block;
   }
 
+  button.jump {
+    color: var(--color-form-bg);
+    font-weight: bold;
+  }
+
   .options {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 0 auto;
+    margin: 2rem auto;
     width: 100%;
     max-width: calc(var(--sz) * 3 + 2em);
+    user-select: none;
   }
 
   .options button {
@@ -170,6 +185,7 @@
   .placeholders {
     display: none;
     margin: 1rem auto;
+    user-select: none;
   }
 
   .previous p {
@@ -179,6 +195,7 @@
 
   .placeholders ul {
     display: flex;
+    justify-content: center;
   }
 
   .placeholders li {

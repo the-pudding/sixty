@@ -187,6 +187,7 @@
 
   .step p {
     background: var(--color-bg);
+    border: 2px solid var(--color-fg);
     padding: 1rem;
   }
 

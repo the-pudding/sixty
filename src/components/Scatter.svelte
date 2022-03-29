@@ -119,7 +119,8 @@
       {#each data.filter((d) => d.highlight) as d (d.id)}
         {@const x = scaleX(d[propX])}
         {@const y = scaleY(d[propY])}
-        <text {x} {y} dy={-0.015} text-anchor="middle">{d.highlight}</text>
+        <rect x={x - 0.1} y={y - 0.0575} width={0.2} height={0.04} />
+        <text {x} {y} dy={-0.03} text-anchor="middle">{d.highlight}</text>
       {/each}
     </g>
   {/if}
@@ -132,21 +133,33 @@
 
   circle {
     stroke-width: 0.001;
-    stroke: var(--color-gray-400);
-    fill: var(--color-gray-100);
+    stroke: var(--color-bg);
+    stroke-opacity: 0.5;
+    fill: var(--color-rose-medium);
+    fill-opacity: 0.5;
   }
 
   .exclude {
-    stroke: var(--color-gray-600);
-    fill: var(--color-gray-400);
+    fill: var(--color-bad);
+    fill-opacity: 1;
   }
 
   .highlight {
-    fill: var(--color-red);
+    fill: var(--color-good);
+    fill-opacity: 1;
+    stroke-opacity: 1;
+    stroke-width: 0.002;
+    stroke: var(--color-fg);
   }
 
   .user {
-    fill: var(--color-green);
+    fill: var(--color-good);
+  }
+
+  .examples rect {
+    fill: var(--color-good);
+    stroke: var(--color-fg);
+    stroke-width: 0.002;
   }
 
   text {
@@ -162,14 +175,14 @@
 
   path {
     fill: none;
-    stroke: var(--color-red);
-    stroke-width: 0.005;
+    stroke: var(--color-good);
+    stroke-width: 0.01;
     stroke-linecap: square;
   }
 
   path:first-of-type {
-    stroke-width: 0.007;
-    stroke: var(--color-gray-900);
+    stroke-width: 0.015;
+    stroke: var(--color-fg);
   }
 
   .axis-x .tick:first-of-type {

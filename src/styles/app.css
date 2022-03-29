@@ -20,17 +20,19 @@
 	--border-radius: 4px;
 	--font-body: var(--serif);
 	--font-form: var(--sans);
-	--color-bg: var(--color-white);
-	--color-fg: var(--color-gray-900);
-	--color-placeholder: var(--color-gray-500);
-  --color-link: var(--color-purple);
+	--color-bg: var(--color-rose);
+	--color-fg: var(--color-rose-dark);
+	--color-placeholder: var(--color-rose-dark);
+  --color-link: var(--color-rose-dark);
   --color-focus: var(--color-red);
-  --color-form-bg: var(--color-gray-300);
-	--color-form-fg: var(--color-gray-900);
-	--color-border: var(--color-gray-300);
-	--color-selection: var(--color-gray-300);
-  --color-highlight: var(--color-yellow);
+  --color-form-bg: var(--color-rose-dark);
+	--color-form-fg: var(--color-rose);
+	--color-border: var(--color-rose-dark);
+	--color-selection: var(--color-pink);
+  --color-highlight: var(--color-pink);
 
+	--color-good: var(--color-green);
+	--color-bad: var(--color-rose-dark);
 	--col-width: 45rem;
 	
 }
@@ -77,6 +79,10 @@ small {
 	font-size: 0.75em;
 }
 
+button:hover {
+	background: var(--color-rose-medium);
+}
+
 button.jump {
 	background: none;
 	border: none;
@@ -92,4 +98,8 @@ button.jump {
 
 figure {
 	font-family: var(--sans);
+}
+
+mark {
+	border: 2px solid var(--color-border);
 }

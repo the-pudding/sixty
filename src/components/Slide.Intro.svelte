@@ -35,7 +35,7 @@
     {@html repeat}
   </p>
 {/if}
-<p>
+<p class="options">
   <button {disabled} on:click={onNext}>{button}</button>
   <br />
   <button {disabled} class="jump" on:click={onJump}><small>{jump}</small></button>
@@ -55,6 +55,10 @@
     right: 1rem;
   }
 
+  .options {
+    /* text-align: center; */
+  }
+
   button {
     font-size: 2em;
     font-weight: bold;
@@ -67,5 +71,6 @@
 
   button.jump {
     font-size: 1em;
+    color: var(--color-form-bg);
   }
 </style>
