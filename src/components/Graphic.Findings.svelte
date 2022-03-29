@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import { ascending } from "d3";
   import Toggle from "$components/helpers/Toggle.svelte";
   import Complexity from "$components/Complexity.svelte";
@@ -53,8 +52,8 @@
   let value = "off";
   let scrollIndex = 0;
   let autoToggle = true;
+  let userToggled = false;
   let autoInterval;
-  let toggled;
   let articleEl;
   let userData;
 
@@ -68,10 +67,12 @@
   $: showUser = $user.scoreToss;
   $: updateUser(showUser);
   $: value = showToggle ? "on" : "off";
-  $: if (toggled) {
-    autoToggle = false;
-    clearInterval(autoInterval);
-  }
+  $: if (autoToggle && showToggle) setAuto();
+
+  const setAuto = () => {
+    console.log("auto");
+    autoInterval = setInterval(() => (value = value === "off" ? "on" : "off"), 3000);
+  };
 
   const updateUser = () => {
     if (!showUser) return;
@@ -94,12 +95,10 @@
   };
 
   const onToggled = () => {
-    toggled = true;
+    userToggled = true;
+    autoToggle = false;
+    clearInterval(autoInterval);
   };
-
-  onMount(() => {
-    autoInterval = setInterval(() => (value = value === "off" ? "on" : "off"), 3000);
-  });
 </script>
 
 <section>
