@@ -47,8 +47,6 @@
     $user.scoreToss = scoreToss;
     $user.score = score;
     $user.guess = score < SIXTY_CUTOFF;
-    $user.rightwrong = $user.guess ? $user.age > 60 : $user.age <= 60;
-    console.log($user);
   };
 
   const removeHash = () =>
@@ -78,15 +76,16 @@
     });
   };
 
+  const clear = () => {
+    storageKeys.forEach((key) => localStorage.remove(`${storagePrefix}_${key}`));
+  };
+
   $: if (slide === ageIndex) getGuess();
   $: $jumped = slide >= jumpIndex;
   $: $user.story = !user.story && $jumped;
   $: updateStorage($user);
 
   onMount(() => {
-    // TODO remove
-    // storageKeys.forEach((key) => localStorage.remove(`${storagePrefix}_${key}`));
-    // console.log("story", localStorage.get("pudding_sixty_story"));
     storageKeys.forEach((key) => {
       $user[key] = localStorage.get(`${storagePrefix}_${key}`);
     });
@@ -95,6 +94,7 @@
   });
 </script>
 
+<button on:click={clear} style="position: absolute; left: 50%;">CLEAR</button>
 <!-- <WIP /> -->
 {#each copy.slides as props, i}
   <div

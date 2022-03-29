@@ -22,6 +22,7 @@
   const onClick = async () => {
     done = true;
     $user.age = value;
+    $user.rightwrong = $user.guess ? $user.age > 60 : $user.age <= 60;
 
     if (!$user.story && $user.age && $user.toss && $user.spot && $user.roll) {
       const table = "readers";
