@@ -64,7 +64,7 @@
   $: showTrend = scrollIndex > 1;
   $: showBad = scrollIndex > 2;
   $: showToggle = scrollIndex > 3;
-  $: showUser = $user.scoreToss;
+  $: showUser = scrollIndex === 1 && $user.scoreToss;
   $: updateUser(showUser);
   $: value = showToggle ? "on" : "off";
   $: if (autoToggle && showToggle) setAuto();
@@ -75,7 +75,11 @@
   };
 
   const updateUser = () => {
-    if (!showUser) return;
+    if (!showUser) {
+      userData = undefined;
+      return;
+    }
+
     let span;
     const toss = +(+$user.scoreToss).toFixed(2);
     if (toss < -2) span = "not really";
