@@ -11,7 +11,7 @@
   export let steps;
 
   const propY = "toss";
-  const bad = -4.42;
+  const bad = -4.41;
 
   const getHighlight = (age, toss) => {
     const match = examples.find((d) => d.age === age && d.toss === toss);
@@ -44,7 +44,7 @@
     spot: +d.spot,
     score: +d.score,
     fixed: +d.fixed,
-    exclude: +d.toss === bad,
+    exclude: +d.toss < bad,
     highlight: getHighlight(+d.age, +d.toss)
   }));
 
@@ -55,6 +55,8 @@
   let autoToggle = true;
   let autoInterval;
   let toggled;
+  let articleEl;
+  let userData;
 
   $: height = `${$viewport.height}px`;
   $: exclude = showToggle && value === "on";
@@ -63,11 +65,33 @@
   $: showTrend = scrollIndex > 1;
   $: showBad = scrollIndex > 2;
   $: showToggle = scrollIndex > 3;
+  $: showUser = $user.scoreToss;
+  $: updateUser(showUser);
   $: value = showToggle ? "on" : "off";
   $: if (toggled) {
     autoToggle = false;
     clearInterval(autoInterval);
   }
+
+  const updateUser = () => {
+    if (!showUser) return;
+    let span;
+    const toss = +(+$user.scoreToss).toFixed(2);
+    if (toss < -2) span = "not really";
+    else if (toss < 0) span = "kind of";
+    else if (toss < 2) span = "pretty";
+    else span = "super";
+    articleEl.querySelector("span").innerText = `It was ${span} random.`;
+
+    const i = data.findIndex((d) => toss <= d.toss);
+    const mark = Math.round((i / data.length) * 100);
+    articleEl.querySelector("mark.higher").innerText = `${mark}%`;
+
+    userData = {
+      age: +$user.age,
+      toss
+    };
+  };
 
   const onToggled = () => {
     toggled = true;
@@ -93,14 +117,28 @@
       {/if}
     </div>
 
-    <Complexity {propY} {data} {exclude} {showTrend} {showValues} {showExample} {showBad} />
+    <Complexity
+      {propY}
+      {data}
+      {exclude}
+      {showTrend}
+      {showValues}
+      {showExample}
+      {showBad}
+      {userData}
+    />
     <!-- <figcaption>Note: {note}</figcaption> -->
   </figure>
 
-  <article>
+  <article bind:this={articleEl}>
     <Scrolly bind:value={scrollIndex}>
       {#each steps as { text }, i}
-        <div class="step" class:active={scrollIndex === i} style:height>
+        <div
+          class="step"
+          class:hide={!showUser && i === 1}
+          class:active={scrollIndex === i}
+          style:height
+        >
           <p>{@html text}</p>
         </div>
       {/each}
@@ -161,5 +199,9 @@
   .info {
     display: flex;
     justify-content: space-between;
+  }
+
+  :global(mark.user) {
+    background: var(--color-green);
   }
 </style>

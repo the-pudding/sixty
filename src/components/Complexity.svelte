@@ -8,6 +8,7 @@
   export let showTrend;
   export let showExample;
   export let showBad;
+  export let userData;
 
   const propX = "age";
 
@@ -29,4 +30,5 @@
   {showTrend}
   {showExample}
   {showBad}
+  {userData}
 />

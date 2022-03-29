@@ -18,7 +18,17 @@
 
   const slideComponents = { Text, Intro, Test, Age, Video, Instructions, Bad, Findings, Correct };
   const storagePrefix = "pudding_sixty";
-  const storageKeys = ["story", "rightwrong", "guess", "score", "age", "toss", "roll", "spot"];
+  const storageKeys = [
+    "story",
+    "rightwrong",
+    "guess",
+    "score",
+    "age",
+    "toss",
+    "roll",
+    "spot",
+    "scoreToss"
+  ];
   const ageIndex = 4;
   const jumpIndex = 5;
 
@@ -29,12 +39,12 @@
 
   const getGuess = async () => {
     const SIXTY_CUTOFF = 0.745;
-    const [score, tossScore, rollScore, spotScore] = await computeComplexity(
+    const [score, scoreToss, scoreRoll, scoreSpot] = await computeComplexity(
       $user.toss,
       $user.roll,
       $user.spot
     );
-    $user.tossScore = tossScore;
+    $user.scoreToss = scoreToss;
     $user.score = score;
     $user.guess = score < SIXTY_CUTOFF;
     $user.rightwrong = $user.guess ? $user.age > 60 : $user.age <= 60;

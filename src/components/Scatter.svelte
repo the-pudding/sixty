@@ -11,6 +11,7 @@
   export let showTrend;
   export let showExample;
   export let showBad;
+  export let userData;
   export let r = 0.01;
 
   const bandwidth = 0.75;
@@ -100,6 +101,12 @@
     </g>
   {/if}
 
+  {#if userData}
+    <g class="user-dot" transform="translate({marginHalf}, {marginHalf})">
+      <circle cx={scaleX(userData[propX])} cy={scaleY(userData[propY])} {r} class="user" />
+    </g>
+  {/if}
+
   {#if showTrend}
     <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
       <path d={path} />
@@ -136,6 +143,10 @@
 
   .highlight {
     fill: var(--color-red);
+  }
+
+  .user {
+    fill: var(--color-green);
   }
 
   text {
