@@ -24,11 +24,11 @@
     "gray-1000": "rgb(25, 25, 25)",
     "purple-light": "#b39bc8",
     "purple": "#ac2f95",
-    "green": "#a1c3d1",
+    "green": "#8cc2d9",
     "offwhite": "#f0ebf4",
-    "rose": "#f172a1",
-    "rose-medium": "#69072B",
-    "rose-dark": "#46071e",
+    "rose": "#f48bb1",
+    "rose-medium": "#B0114C",
+    "rose-dark": "#46071F",
     "pink": "#e64398"
   }
 }

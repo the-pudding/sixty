@@ -182,7 +182,8 @@
   }
 
   .step {
-    opacity: 0.2;
+    transition: opacity 250ms ease-in-out;
+    opacity: 0.75;
   }
 
   .step p {

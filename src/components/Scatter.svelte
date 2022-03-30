@@ -168,7 +168,7 @@
   }
 
   line {
-    stroke: var(--color-gray-500);
+    stroke: var(--color-rose-medium);
     stroke-width: 0.001;
     stroke-dasharray: 0.0002em 0.0002em;
   }
