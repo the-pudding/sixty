@@ -15,7 +15,7 @@
   import localStorage from "$utils/localStorage.js";
   import computeComplexity from "$utils/computeComplexity.js";
   import copy from "$data/doc.json";
-  import { user, jumped } from "$stores/misc.js";
+  import { user, jumped, readerData } from "$stores/misc.js";
 
   const slideComponents = {
     Text,
@@ -97,12 +97,15 @@
   $: $user.story = !user.story && $jumped;
   $: updateStorage($user);
 
-  onMount(() => {
+  onMount(async () => {
     storageKeys.forEach((key) => {
       $user[key] = localStorage.get(`${storagePrefix}_${key}`);
     });
     repeatUser = $user.story;
     mounted = true;
+    const url = `https://pudding.cool/2022/04/sixty-data/data.json?version=${Date.now()}`;
+    const response = await fetch(url);
+    $readerData = await response.json();
   });
 </script>
 

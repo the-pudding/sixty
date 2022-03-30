@@ -26,24 +26,3 @@ export const getScore = async (id, a) => {
 
 	return score;
 };
-
-export const getTotal = async () => {
-	// filter valid
-	const response = await supabase
-		.from("readers")
-		.select("id", { count: "exact", head: true });
-
-	if (response.error) console.log(response.error);
-	return response.count;
-};
-
-export const getCorrect = async () => {
-	// filter valid
-	const response = await supabase
-		.from("readers")
-		.select("id", { count: "exact", head: true })
-		.eq("guess", true);
-
-	if (response.error) console.log(response.error);
-	return response.count;
-};
