@@ -19,17 +19,17 @@
 
   const examples = [
     {
-      age: 15,
+      age: 14.8,
       toss: 0.17,
       value: "TTHHTHHHHHHH"
     },
     {
-      age: 42,
+      age: 41.6,
       toss: 2.72,
       value: "HHTHTTTHHHTT"
     },
     {
-      age: 72,
+      age: 72.0,
       toss: -2.43,
       value: "HTTHTTTTTTTT"
     }
