@@ -24,10 +24,18 @@
     $user.age = value;
     $user.rightwrong = $user.guess ? $user.age > 60 : $user.age <= 60;
 
-    if (!$user.story && $user.age && $user.toss && $user.spot && $user.roll) {
+    if (
+      !$user.story &&
+      $user.age &&
+      $user.toss &&
+      $user.spot &&
+      $user.roll &&
+      $user.score &&
+      $user.scoreToss
+    ) {
       const table = "readers";
       const data = {};
-      const keys = ["toss", "spot", "roll", "age", "guess"];
+      const keys = ["toss", "spot", "roll", "age", "guess", "rightwrong", "score", "scoreToss"];
       const valid = checkValid(keys.slice(0, 3));
       if (valid) {
         keys.forEach((key) => (data[key] = $user[key]));

@@ -9,6 +9,7 @@
   import Instructions from "$components/Graphic.Instructions.svelte";
   import Bad from "$components/Graphic.Bad.svelte";
   import Findings from "$components/Graphic.Findings.svelte";
+  import Aggregate from "$components/Graphic.Aggregate.svelte";
   import Correct from "$components/Graphic.Correct.svelte";
   import Age from "$components/Slide.Age.svelte";
   import localStorage from "$utils/localStorage.js";
@@ -16,7 +17,18 @@
   import copy from "$data/doc.json";
   import { user, jumped } from "$stores/misc.js";
 
-  const slideComponents = { Text, Intro, Test, Age, Video, Instructions, Bad, Findings, Correct };
+  const slideComponents = {
+    Text,
+    Intro,
+    Test,
+    Age,
+    Video,
+    Instructions,
+    Bad,
+    Findings,
+    Aggregate,
+    Correct
+  };
   const storagePrefix = "pudding_sixty";
   const storageKeys = [
     "story",
@@ -44,8 +56,8 @@
       $user.roll,
       $user.spot
     );
-    $user.scoreToss = scoreToss;
-    $user.score = score;
+    $user.scoreToss = scoreToss.toFixed(2);
+    $user.score = score.toFixed(2);
     $user.guess = score < SIXTY_CUTOFF;
   };
 

@@ -26,5 +26,5 @@
 </script>
 
 <p>
-  By the way, we have guessed right <mark>{correct}%</mark> of the time so far. {text}.
+  For what its worth, we have guessed right <mark>{correct}%</mark> of the time. {text}.
 </p>

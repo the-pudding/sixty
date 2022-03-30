@@ -39,10 +39,6 @@
     id,
     age: +d.age,
     toss: +d.toss,
-    roll: +d.roll,
-    spot: +d.spot,
-    score: +d.score,
-    fixed: +d.fixed,
     exclude: +d.toss < bad,
     highlight: getHighlight(+d.age, +d.toss)
   }));
@@ -70,7 +66,6 @@
   $: if (autoToggle && showToggle) setAuto();
 
   const setAuto = () => {
-    console.log("auto");
     autoInterval = setInterval(() => (value = value === "off" ? "on" : "off"), 3000);
   };
 
