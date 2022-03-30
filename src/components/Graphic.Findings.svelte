@@ -60,7 +60,7 @@
   $: showTrend = scrollIndex > 1;
   $: showBad = scrollIndex > 2;
   $: showToggle = scrollIndex > 3;
-  $: showUser = scrollIndex === 1 && $user.scoreToss;
+  $: showUser = scrollIndex === 1 && $user.scoreToss && $user.age <= 90;
   $: updateUser(showUser);
   $: value = showToggle ? "on" : "off";
   $: if (autoToggle && showToggle) setAuto();
