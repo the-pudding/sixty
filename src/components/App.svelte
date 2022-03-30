@@ -10,6 +10,7 @@
   import Bad from "$components/Graphic.Bad.svelte";
   import Findings from "$components/Graphic.Findings.svelte";
   import Aggregate from "$components/Graphic.Aggregate.svelte";
+  import Live from "$components/Graphic.Live.svelte";
   import Correct from "$components/Graphic.Correct.svelte";
   import Age from "$components/Slide.Age.svelte";
   import localStorage from "$utils/localStorage.js";
@@ -27,6 +28,7 @@
     Bad,
     Findings,
     Aggregate,
+    Live,
     Correct
   };
   const storagePrefix = "pudding_sixty";
