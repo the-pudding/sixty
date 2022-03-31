@@ -111,8 +111,6 @@
   });
 </script>
 
-<button on:click={clear} style="position: absolute; left: 50%;">CLEAR</button>
-<!-- <WIP /> -->
 {#each copy.slides as props, i}
   <div
     class="slide"

@@ -12,22 +12,8 @@
   export let showExample;
   export let showBad;
   export let userData;
-  export let r = 0.01;
 
   const bandwidth = 0.75;
-  const margin = r * 8;
-  const marginHalf = margin * 0.75;
-
-  const scaleX = scaleLinear()
-    .domain(domainX)
-    .range([0, 1 - margin]);
-
-  const scaleY = scaleLinear()
-    .domain(domainY)
-    .range([1 - margin * 2, 0]);
-
-  const ticksX = scaleX.ticks(10);
-  const ticksY = scaleY.ticks(5);
 
   const lineGenerator = line()
     .x((d) => scaleX(d[0]))
@@ -48,8 +34,25 @@
   let path;
   let interpolator;
   let t;
+  let clientWidth;
 
-  $: {
+  $: width = clientWidth;
+  $: height = width;
+  $: r = Math.floor(width / 100);
+  $: margin = r * 8;
+  $: marginHalf = margin / 2;
+  $: scaleX = scaleLinear()
+    .domain(domainX)
+    .range([0, width - margin]);
+  $: scaleY = scaleLinear()
+    .domain(domainY)
+    .range([height - margin * 2, 0]);
+  $: ticksX = scaleX.ticks(10);
+  $: ticksY = scaleY.ticks(5);
+  $: rectW = 160;
+  $: rectH = 24;
+
+  $: if (clientWidth) {
     const prevTrend = curTrend;
     curTrend = lineGenerator(lineLoess(data));
     if (prevTrend) {
@@ -60,71 +63,75 @@
   }
 </script>
 
-<svg viewbox="0 0 1 1">
-  <g class="axis">
-    <g class="axis-x" transform="translate({marginHalf}, {-marginHalf})">
-      {#each ticksX as tick}
-        {@const x = scaleX(tick)}
-        <g class="tick" transform="translate({x}, 1)">
-          <line x1="0" x2="0" y1={-marginHalf / 2} y2={-1 + margin + marginHalf / 2} />
-          <text x="0" y="0" text-anchor="middle">{tick}</text>
+<div bind:clientWidth>
+  {#if clientWidth}
+    <svg style:width="{width}px" style:height="{height}px">
+      <g class="axis">
+        <g class="axis-x" transform="translate({marginHalf}, {-marginHalf})">
+          {#each ticksX as tick}
+            {@const x = scaleX(tick)}
+            <g class="tick" transform="translate({x}, {height})">
+              <line x1="0" x2="0" y1={-marginHalf} y2={-height + margin - marginHalf / 2} />
+              <text x="0" y="0.325em" text-anchor="middle">{tick}</text>
+            </g>
+          {/each}
         </g>
-      {/each}
-    </g>
 
-    <g class="axis-y" transform="translate({marginHalf}, {marginHalf})">
-      {#each ticksY as tick}
-        {@const y = scaleY(tick)}
-        <g class="tick" transform="translate(0, {y})">
-          <line x1={marginHalf / 2} x2={1 - marginHalf} y1="0" y2="0" />
-          <text x="0" y="0.008" text-anchor="end">{tick}</text>
+        <g class="axis-y" transform="translate({marginHalf}, {marginHalf})">
+          {#each ticksY as tick}
+            {@const y = scaleY(tick)}
+            <g class="tick" transform="translate(0, {y})">
+              <line x1={marginHalf / 2} x2={width - marginHalf} y1="0" y2="0" />
+              <text x="0" y="0.325em" text-anchor="end">{tick}</text>
+            </g>
+          {/each}
         </g>
-      {/each}
-    </g>
 
-    <text x="0.5" y={1 - 0.01} text-anchor="middle">{propX}</text>
-  </g>
+        <text x={width / 2} y={height - r} text-anchor="middle">{propX}</text>
+      </g>
 
-  {#if showValues}
-    <g class="dots" transform="translate({marginHalf}, {marginHalf})">
-      {#each data as d (d.id)}
-        {@const cx = scaleX(d[propX])}
-        {@const cy = scaleY(d[propY])}
-        <circle
-          {cx}
-          {cy}
-          {r}
-          class:exclude={showBad && d.exclude}
-          class:highlight={d.highlight && showExample}
-        />
-      {/each}
-    </g>
+      {#if showValues}
+        <g class="dots" transform="translate({marginHalf}, {marginHalf})">
+          {#each data as d (d.id)}
+            {@const cx = scaleX(d[propX])}
+            {@const cy = scaleY(d[propY])}
+            <circle
+              {cx}
+              {cy}
+              {r}
+              class:exclude={showBad && d.exclude}
+              class:highlight={d.highlight && showExample}
+            />
+          {/each}
+        </g>
+      {/if}
+
+      {#if userData}
+        <g class="user-dot" transform="translate({marginHalf}, {marginHalf})">
+          <circle cx={scaleX(userData[propX])} cy={scaleY(userData[propY])} {r} class="user" />
+        </g>
+      {/if}
+
+      {#if showTrend}
+        <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
+          <path d={path} />
+          <path d={path} />
+        </g>
+      {/if}
+
+      {#if showExample}
+        <g class="examples" transform="translate({marginHalf}, {marginHalf})">
+          {#each data.filter((d) => d.highlight) as d (d.id)}
+            {@const x = scaleX(d[propX])}
+            {@const y = scaleY(d[propY])}
+            <rect x={x - rectW / 2} y={y - rectH * 1.5} width={rectW} height={rectH} />
+            <text {x} {y} dy={-rectH / 1.325} text-anchor="middle">{d.highlight}</text>
+          {/each}
+        </g>
+      {/if}
+    </svg>
   {/if}
-
-  {#if userData}
-    <g class="user-dot" transform="translate({marginHalf}, {marginHalf})">
-      <circle cx={scaleX(userData[propX])} cy={scaleY(userData[propY])} {r} class="user" />
-    </g>
-  {/if}
-
-  {#if showTrend}
-    <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
-      <path d={path} />
-      <path d={path} />
-    </g>
-  {/if}
-
-  {#if showExample}
-    <g class="examples" transform="translate({marginHalf}, {marginHalf})">
-      {#each data.filter((d) => d.highlight) as d (d.id)}
-        {@const x = scaleX(d[propX])}
-        {@const y = scaleY(d[propY])}
-        <rect x={x - 0.1} y={y - 0.0575} width={0.2} height={0.04} />
-        <text {x} {y} dy={-0.03} text-anchor="middle">{d.highlight}</text>
-      {/each}
-    </g>
-  {/if}
-</svg>
+</div>
 
 <style>
   svg {
@@ -132,9 +139,9 @@
   }
 
   circle {
-    stroke-width: 0.001;
+    stroke-width: 1px;
     stroke: var(--color-bg);
-    stroke-opacity: 0.5;
+    stroke-opacity: 0;
     fill: var(--color-rose-medium);
     fill-opacity: 0.5;
   }
@@ -148,7 +155,7 @@
     fill: var(--color-good);
     fill-opacity: 1;
     stroke-opacity: 1;
-    stroke-width: 0.002;
+    stroke-width: 2px;
     stroke: var(--color-fg);
   }
 
@@ -159,29 +166,30 @@
   .examples rect {
     fill: var(--color-good);
     stroke: var(--color-fg);
-    stroke-width: 0.002;
+    stroke-width: 2px;
   }
 
   text {
-    font-size: 0.001em;
+    font-size: 0.75em;
     text-transform: capitalize;
+    fill: var(--color-rose-dark);
   }
 
   line {
     stroke: var(--color-rose-medium);
-    stroke-width: 0.001;
-    stroke-dasharray: 0.0002em 0.0002em;
+    stroke-width: 1px;
+    stroke-dasharray: 5px 5px;
   }
 
   path {
     fill: none;
     stroke: var(--color-good);
-    stroke-width: 0.01;
+    stroke-width: 6px;
     stroke-linecap: square;
   }
 
   path:first-of-type {
-    stroke-width: 0.015;
+    stroke-width: 10px;
     stroke: var(--color-fg);
   }
 
