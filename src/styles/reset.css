@@ -78,8 +78,9 @@ input[type="submit"]:hover {
 button:focus,
 input:focus,
 select:focus,
-textarea:focus {
-  box-shadow: 0 0 0 2px var(--color-focus);
+textarea:focus,
+a:focus {
+  outline: 2px dashed var(--color-focus);
 }
 
 button:disabled,

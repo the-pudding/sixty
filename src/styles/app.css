@@ -24,7 +24,7 @@
 	--color-fg: var(--color-rose-dark);
 	--color-placeholder: var(--color-rose-dark);
   --color-link: var(--color-rose-dark);
-  --color-focus: var(--color-red);
+  --color-focus: var(--color-rose-medium);
   --color-form-bg: var(--color-rose-dark);
 	--color-form-fg: var(--color-rose);
 	--color-border: var(--color-rose-dark);
@@ -79,8 +79,18 @@ small {
 	font-size: 0.75em;
 }
 
+button, a {
+	transform-origin: 50% 50%;
+	transition: all 100ms ease-in-out;
+	outline-offset: 3px;
+}
+
 button:hover {
 	background: var(--color-rose-medium);
+}
+
+button:active {
+	transform: scale(0.95);
 }
 
 button.jump {
