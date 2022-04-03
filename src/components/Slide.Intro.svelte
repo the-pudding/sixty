@@ -50,9 +50,11 @@
 
   .byline {
     position: absolute;
-    font-size: 0.625em;
+    font-size: 0.75em;
     top: 1rem;
     right: 1rem;
+    max-width: 10em;
+    text-align: right;
   }
 
   .options {
