@@ -28,7 +28,7 @@
       <p>Excludes bad responses</p>
     </div>
 
-    {#if data}
+    {#if data && data.length}
       <Complexity {propY} {data} {showTrend} {showValues} />
     {/if}
   </figure>

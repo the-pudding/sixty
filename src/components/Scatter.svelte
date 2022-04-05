@@ -46,7 +46,7 @@
   $: width = clientWidth;
   $: height = width;
   $: r = Math.floor(width / 100);
-  $: margin = r * 8;
+  $: margin = r * 10;
   $: marginHalf = margin / 2;
   $: scaleX = scaleLinear()
     .domain(domainX)

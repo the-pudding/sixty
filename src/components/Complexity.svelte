@@ -14,7 +14,7 @@
 
   const domainY = extent(data, (d) => d[propY]);
   // console.log(domainY);
-  const maxX = max(data, (d) => d[propX]);
+  const maxX = 92;
   const domainX = [0, maxX];
 
   $: render = data.filter((d) => (exclude ? d[propY] !== domainY[0] : true));
