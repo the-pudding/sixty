@@ -8,10 +8,10 @@
 	<meta http-equiv="content-security-policy" content=""><title>Title TK</title><meta name="description" content="Description TK" data-svelte="svelte-1ad9fm2"><meta name="author" content="The Pudding" data-svelte="svelte-1ad9fm2"><meta name="news_keywords" content="" data-svelte="svelte-1ad9fm2"><meta property="og:title" content="Title TK" data-svelte="svelte-1ad9fm2"><meta property="og:site_name" content="The Pudding" data-svelte="svelte-1ad9fm2"><meta property="og:url" content="https://pudding.cool" data-svelte="svelte-1ad9fm2"><meta property="og:description" content="Description TK" data-svelte="svelte-1ad9fm2"><meta property="og:type" content="article" data-svelte="svelte-1ad9fm2"><meta property="og:locale" content="en_US" data-svelte="svelte-1ad9fm2"><meta property="og:image" content="https://pudding.cool/assets/social-facebook.jpg" data-svelte="svelte-1ad9fm2"><meta property="og:image:type" content="image/jpeg" data-svelte="svelte-1ad9fm2"><meta property="og:image:width" content="1200" data-svelte="svelte-1ad9fm2"><meta property="og:image:height" content="600" data-svelte="svelte-1ad9fm2"><meta name="twitter:card" content="summary_large_image" data-svelte="svelte-1ad9fm2"><meta name="twitter:site" content="https://pudding.cool" data-svelte="svelte-1ad9fm2"><meta name="twitter:creator" content="@puddingviz" data-svelte="svelte-1ad9fm2"><meta name="twitter:title" content="Title TK" data-svelte="svelte-1ad9fm2"><meta name="twitter:description" content="Description TK" data-svelte="svelte-1ad9fm2"><meta name="twitter:image:src" content="https://pudding.cool/assets/social-twitter.jpg" data-svelte="svelte-1ad9fm2"><meta name="robots" content="max-image-preview:large" data-svelte="svelte-1ad9fm2"><link rel="canonical" href="https://pudding.cool/" data-svelte="svelte-1ad9fm2">
 	<link rel="stylesheet" href="/sixty/_app/assets/pages/__layout.svelte-4bd24439.css">
 	<link rel="stylesheet" href="/sixty/_app/assets/pages/index.svelte-765eed93.css">
-	<link rel="modulepreload" href="/sixty/_app/start-55d88c0e.js">
-	<link rel="modulepreload" href="/sixty/_app/chunks/vendor-ed419b74.js">
-	<link rel="modulepreload" href="/sixty/_app/pages/__layout.svelte-58687bbd.js">
-	<link rel="modulepreload" href="/sixty/_app/pages/index.svelte-d12433ad.js">
+	<link rel="modulepreload" href="/sixty/_app/start-818d0ab2.js">
+	<link rel="modulepreload" href="/sixty/_app/chunks/vendor-e3bd6afa.js">
+	<link rel="modulepreload" href="/sixty/_app/pages/__layout.svelte-efc815a6.js">
+	<link rel="modulepreload" href="/sixty/_app/pages/index.svelte-d28c21d9.js">
 </head>
 
 <body>
@@ -90,8 +90,8 @@
 </div>
   </div><div class="slide svelte-180nkw6" id="slide-4"><div class="age"><p>Thanks for playing! Based on your answers we think you are.... How old are you really? For science.*</p>
   <div class="range svelte-y7l2sc"><div class="range svelte-2766ne"><div class="ticks svelte-2766ne"></div>
-  <input  id="range-0593430636348574" type="range" min="0" max="120" step="1" class="svelte-2766ne" value="0">
-  <output name="result" for="range-0593430636348574" class="svelte-2766ne visible" style="left: calc(0% + (12px));">0</output>
+  <input  id="range-07376965551308434" type="range" min="0" max="120" step="1" class="svelte-2766ne" value="0">
+  <output name="result" for="range-07376965551308434" class="svelte-2766ne visible" style="left: calc(0% + (12px));">0</output>
 </div></div>
 
   <button disabled class="svelte-y7l2sc">I am <strong>0</strong> years old</button>
@@ -169,8 +169,7 @@
 <section><figure class="svelte-10mybih"><div class="info svelte-10mybih"><h3 class="svelte-10mybih"><strong>Our Aggregate Complexity Scores by Age</strong></h3>
       <p class="svelte-10mybih">Excludes bad responses</p></div>
 
-    <div>
-</div></figure>
+    </figure>
 </section>
   </div><div class="slide svelte-180nkw6" id="slide-20"><div class="text"><p class="svelte-yqwmr6"><!-- HTML_TAG_START -->Since this chart is being created on the fly, we can’t tell you what it looks like. But our hypothesis is that it is more or less a straight line. Are we right? If so, we haven’t found any correlation with age and randomness. If not, then perhaps there is something worth exploring further!<!-- HTML_TAG_END --></p>
 </div>
@@ -178,15 +177,15 @@
 </div>
   </div>
 
-<div class="slide svelte-180nkw6" id="methods"><p class="svelte-180nkw6"><small><!-- HTML_TAG_START -->The calculation of algorithmic complexity is done using the <a href=https://www.complexitycalculator.com/HowItWorks.html rel=external>CTM method</a>. In practice, we use a custom implementation of the <a href=https://cran.r-project.org/web/packages/acss/index.html rel=external>acss R package</a> to obtain this complexity for given user inputs.<!-- HTML_TAG_END --></small></p><p class="svelte-180nkw6"><small><!-- HTML_TAG_START -->We utilize the original datasets for the study…<!-- HTML_TAG_END --></small></p></div>
+<div class="slide svelte-180nkw6" id="methods"><p class="svelte-180nkw6"><small><!-- HTML_TAG_START -->The calculation of algorithmic complexity is done using the <a href=https://www.complexitycalculator.com/HowItWorks.html rel=external>CTM method</a>. In practice, we use a custom implementation of the <a href=https://cran.r-project.org/web/packages/acss/index.html rel=external>acss R package</a> to obtain this complexity for given user inputs and compute an overall score.<!-- HTML_TAG_END --></small></p><p class="svelte-180nkw6"><small><!-- HTML_TAG_START -->For the task level data, we use the <a href=https://github.com/algorithmicnaturelab/HumanBehavioralComplexity rel=external>original dataset</a> of the study and use a cutoff non-uniform responses to remove “bad” ones. We then overlay this data with a trend line calculated using the LOESS (locally estimated scatterplot smoothing) method.<!-- HTML_TAG_END --></small></p></div>
 
 </main>
 
 
-		<script type="module" data-hydrate="gnj35q">
-		import { start } from "/sixty/_app/start-55d88c0e.js";
+		<script type="module" data-hydrate="14fl729">
+		import { start } from "/sixty/_app/start-818d0ab2.js";
 		start({
-			target: document.querySelector('[data-hydrate="gnj35q"]').parentNode,
+			target: document.querySelector('[data-hydrate="14fl729"]').parentNode,
 			paths: {"base":"/sixty","assets":"/sixty"},
 			session: {},
 			route: true,
@@ -196,8 +195,8 @@
 				status: 200,
 				error: null,
 				nodes: [
-					import("/sixty/_app/pages/__layout.svelte-58687bbd.js"),
-						import("/sixty/_app/pages/index.svelte-d12433ad.js")
+					import("/sixty/_app/pages/__layout.svelte-efc815a6.js"),
+						import("/sixty/_app/pages/index.svelte-d28c21d9.js")
 				],
 				params: {}
 			}
