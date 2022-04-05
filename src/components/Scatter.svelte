@@ -1,4 +1,6 @@
 <script>
+  import { quadInOut } from "svelte/easing";
+  import { fade } from "svelte/transition";
   import { scaleLinear, line } from "d3";
   import { interpolatePath } from "d3-interpolate-path";
   import regressionLoess from "$utils/loess";
@@ -12,6 +14,11 @@
   export let showExample;
   export let showBad;
   export let userData;
+
+  const fadeOpts = {
+    duration: 150,
+    ease: quadInOut
+  };
 
   const bandwidth = 0.75;
 
@@ -113,14 +120,22 @@
       {/if}
 
       {#if showTrend}
-        <g class="smooth" transform="translate({marginHalf}, {marginHalf})">
+        <g
+          transition:fade={fadeOpts}
+          class="smooth"
+          transform="translate({marginHalf}, {marginHalf})"
+        >
           <path d={path} />
           <path d={path} />
         </g>
       {/if}
 
       {#if showExample}
-        <g class="examples" transform="translate({marginHalf}, {marginHalf})">
+        <g
+          transition:fade={fadeOpts}
+          class="examples"
+          transform="translate({marginHalf}, {marginHalf})"
+        >
           {#each data.filter((d) => d.highlight) as d (d.id)}
             {@const x = scaleX(d[propX])}
             {@const y = scaleY(d[propY])}

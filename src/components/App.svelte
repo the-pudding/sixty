@@ -2,8 +2,8 @@
   import { onMount, tick } from "svelte";
   import { writable } from "svelte/store";
   import WIP from "$components/helpers/WIP.svelte";
+  import Footer from "$components/Footer.svelte";
   import Text from "$components/Slide.Text.svelte";
-  import Video from "$components/Slide.Video.svelte";
   import Intro from "$components/Slide.Intro.svelte";
   import Test from "$components/Slide.Test.svelte";
   import Instructions from "$components/Graphic.Instructions.svelte";
@@ -23,7 +23,6 @@
     Intro,
     Test,
     Age,
-    Video,
     Instructions,
     Bad,
     Findings,
@@ -129,17 +128,31 @@
   </div>
 {/each}
 
+<div class="slide" id="methods" class:visible={$jumped} class:jumped={$jumped} class:skipped>
+  {#each copy.methods as { value }}
+    <p><small>{@html value}</small></p>
+  {/each}
+</div>
+
+{#if $jumped}
+  <Footer />
+{/if}
+
 <style>
   .slide {
     width: 100%;
     max-width: var(--col-width);
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 1rem;
     display: none;
   }
 
   .visible {
     display: block;
+  }
+
+  #methods p {
+    line-height: 1.2;
   }
 
   :global(.jumped .age) {

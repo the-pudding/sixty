@@ -3,6 +3,10 @@
   import Complexity from "$components/Complexity.svelte";
   import { readerData } from "$stores/misc.js";
 
+  export let text;
+
+  let textEl;
+
   const propY = "score";
   $: data = $readerData.results.map((d, id) => ({
     id,
@@ -10,10 +14,13 @@
     score: +d.score
   }));
 
+  $: if (textEl && $readerData.total) textEl.querySelector("mark").innerText = $readerData.total;
+
   const showTrend = true;
   const showValues = true;
 </script>
 
+<p bind:this={textEl}>{@html text}</p>
 <section>
   <figure>
     <div class="info">
@@ -21,7 +28,9 @@
       <p>Excludes bad responses</p>
     </div>
 
-    <Complexity {propY} {data} {showTrend} {showValues} />
+    {#if data}
+      <Complexity {propY} {data} {showTrend} {showValues} />
+    {/if}
   </figure>
 </section>
 
@@ -39,8 +48,8 @@
     margin-bottom: 0;
   }
 
-  p {
-    margin: 0;
+  figure p {
     font-size: 1em;
+    margin: 0;
   }
 </style>

@@ -48,7 +48,6 @@ html {
 
 main {
 	font-size: clamp(18px, 2.5vw, 24px);
-	padding: 1rem;
 }
 
 h1 {
@@ -56,7 +55,7 @@ h1 {
 	line-height: 1.1;
 	margin: 1rem auto;
 	max-width: var(--col-width);
-	font-size: 2.75em;
+	font-size: 2em;
 }
 
 h3 {

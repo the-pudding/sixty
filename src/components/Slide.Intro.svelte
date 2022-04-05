@@ -4,7 +4,6 @@
   import { user } from "$stores/misc.js";
   export let hed;
   export let problem;
-  export let prompt;
   export let button;
   export let repeat;
   export let jump;
@@ -27,14 +26,16 @@
 </script>
 
 <Header />
-<h1>{hed}</h1>
-<p>{problem}</p>
-<p>{prompt}</p>
-{#if repeatUser}
-  <p class="repeat">
-    {@html repeat}
-  </p>
-{/if}
+<div class="info">
+  <h1>{hed}</h1>
+  <p>{problem}</p>
+  <!-- <p>{prompt}</p> -->
+  {#if repeatUser}
+    <p class="repeat">
+      {@html repeat}
+    </p>
+  {/if}
+</div>
 <p class="options">
   <button {disabled} on:click={onNext}>{button}</button>
   <br />
@@ -57,8 +58,8 @@
     text-align: right;
   }
 
-  .options {
-    /* text-align: center; */
+  .info p {
+    margin-top: 1.5rem;
   }
 
   button {
