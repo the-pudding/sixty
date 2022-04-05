@@ -43,7 +43,7 @@
     highlight: getHighlight(+d.age, +d.toss)
   }));
 
-  data.sort((a, b) => ascending(!!a.highlight, !!b.highlight));
+  data.sort((a, b) => ascending(!!a.highlight, !!b.highlight) || ascending(a.toss, b.toss));
 
   let value = "off";
   let scrollIndex = 0;
@@ -60,8 +60,8 @@
   $: showTrend = scrollIndex > 1;
   $: showBad = scrollIndex > 2;
   $: showToggle = scrollIndex > 3;
-  $: showUser = scrollIndex === 1 && $user.scoreToss && +$user.age <= 90;
-  $: updateUser(showUser);
+  $: showUser = $user.scoreToss && +$user.age <= 90;
+  $: updateUser(showUser, scrollIndex);
   $: value = showToggle ? "on" : "off";
   $: if (autoToggle && showToggle) setAuto();
 
@@ -69,28 +69,25 @@
     autoInterval = setInterval(() => (value = value === "off" ? "on" : "off"), 3000);
   };
 
-  const updateUser = () => {
-    if (!showUser) {
-      userData = undefined;
-      return;
-    }
+  const updateUser = (u, si) => {
+    if (u && si === 1) {
+      let span;
+      const toss = +(+$user.scoreToss).toFixed(2);
+      if (toss < -2) span = "not really";
+      else if (toss < 0) span = "kind of";
+      else if (toss < 2) span = "pretty";
+      else span = "super";
+      articleEl.querySelector("span").innerText = `It was ${span} random.`;
 
-    let span;
-    const toss = +(+$user.scoreToss).toFixed(2);
-    if (toss < -2) span = "not really";
-    else if (toss < 0) span = "kind of";
-    else if (toss < 2) span = "pretty";
-    else span = "super";
-    articleEl.querySelector("span").innerText = `It was ${span} random.`;
+      const i = data.findIndex((d) => toss <= d.toss);
+      const mark = Math.round((i / data.length) * 100);
+      articleEl.querySelector("mark.higher").innerText = `${mark}%`;
 
-    const i = data.findIndex((d) => toss <= d.toss);
-    const mark = Math.round((i / data.length) * 100);
-    articleEl.querySelector("mark.higher").innerText = `${mark}%`;
-
-    userData = {
-      age: +$user.age,
-      toss
-    };
+      userData = {
+        age: +$user.age,
+        toss
+      };
+    } else userData = undefined;
   };
 
   const onToggled = () => {

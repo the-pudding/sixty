@@ -114,8 +114,8 @@
       {/if}
 
       {#if userData}
-        <g class="user-dot" transform="translate({marginHalf}, {marginHalf})">
-          <circle cx={scaleX(userData[propX])} cy={scaleY(userData[propY])} {r} class="user" />
+        <g class="user" transform="translate({marginHalf}, {marginHalf})">
+          <circle cx={scaleX(userData[propX])} cy={scaleY(userData[propY])} {r} />
         </g>
       {/if}
 
@@ -174,8 +174,12 @@
     stroke: var(--color-fg);
   }
 
-  .user {
+  .user circle {
     fill: var(--color-good);
+    stroke-opacity: 1;
+    fill-opacity: 1;
+    stroke-width: 2px;
+    stroke: var(--color-fg);
   }
 
   .examples rect {
