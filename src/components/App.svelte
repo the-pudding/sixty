@@ -111,6 +111,8 @@
   });
 </script>
 
+<WIP />
+
 {#each copy.slides as props, i}
   <div
     class="slide"
