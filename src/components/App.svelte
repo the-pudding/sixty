@@ -40,7 +40,9 @@
     "toss",
     "roll",
     "spot",
-    "scoreToss"
+    "scoreToss",
+    "scoreRoll",
+    "scoreSpot"
   ];
   const ageIndex = 4;
   const jumpIndex = 5;
@@ -58,6 +60,8 @@
       $user.spot
     );
     $user.scoreToss = scoreToss.toFixed(2);
+    $user.scoreRoll = scoreRoll.toFixed(2);
+    $user.scoreSpot = scoreSpot.toFixed(2);
     $user.score = score.toFixed(2);
     $user.guess = score < SIXTY_CUTOFF;
   };

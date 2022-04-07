@@ -8,10 +8,17 @@
   let textEl;
 
   const propY = "score";
+  const checkValid = (keys) => {
+    const bad = {
+      toss: -4.42,
+      roll: -11.38,
+      spot: -15.15
+    };
+  };
+
   $: data = $readerData.results.map((d, id) => ({
-    id,
-    age: +d.age,
-    score: +d.score
+    ...d,
+    id
   }));
 
   $: if (textEl && $readerData.total) textEl.querySelector("mark").innerText = $readerData.total;
