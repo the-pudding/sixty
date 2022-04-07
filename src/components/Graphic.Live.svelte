@@ -16,10 +16,12 @@
     };
   };
 
-  $: data = $readerData.results.map((d, id) => ({
-    ...d,
-    id
-  }));
+  $: data = $readerData.results
+    .map((d, id) => ({
+      ...d,
+      id
+    }))
+    .filter((d) => !d.bad);
 
   $: if (textEl && $readerData.total) textEl.querySelector("mark").innerText = $readerData.total;
 

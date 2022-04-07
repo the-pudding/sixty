@@ -48,12 +48,16 @@
   $: r = Math.floor(width / 100);
   $: margin = r * 10;
   $: marginHalf = margin / 2;
+  $: marginLeft = margin;
+  $: marginRight = marginHalf;
+  $: marginTop = marginHalf;
+  $: marginBottom = margin * 1.5;
   $: scaleX = scaleLinear()
     .domain(domainX)
-    .range([0, width - margin]);
+    .range([0, width - marginLeft - marginRight]);
   $: scaleY = scaleLinear()
     .domain(domainY)
-    .range([height - margin * 2, 0]);
+    .range([height - marginTop - marginBottom, 0]);
   $: ticksX = scaleX.ticks(10);
   $: ticksY = scaleY.ticks(5);
   $: rectW = 160;
@@ -74,21 +78,21 @@
   {#if clientWidth}
     <svg style:width="{width}px" style:height="{height}px">
       <g class="axis">
-        <g class="axis-x" transform="translate({marginHalf}, {-marginHalf})">
+        <g class="axis-x" transform="translate({marginLeft}, {-marginTop})">
           {#each ticksX as tick}
             {@const x = scaleX(tick)}
             <g class="tick" transform="translate({x}, {height})">
               <line x1="0" x2="0" y1={-marginHalf} y2={-height + margin - marginHalf / 2} />
-              <text x="0" y="0.325em" text-anchor="middle">{tick}</text>
+              <text x="0" y="0" text-anchor="middle">{tick}</text>
             </g>
           {/each}
         </g>
 
-        <g class="axis-y" transform="translate({marginHalf}, {marginHalf})">
+        <g class="axis-y" transform="translate({marginLeft}, {marginTop})">
           {#each ticksY as tick}
             {@const y = scaleY(tick)}
             <g class="tick" transform="translate(0, {y})">
-              <line x1={marginHalf / 2} x2={width - marginHalf} y1="0" y2="0" />
+              <line x1={marginHalf / 4} x2={width - marginHalf} y1="0" y2="0" />
               <text x="0" y="0.325em" text-anchor="end">{tick}</text>
             </g>
           {/each}
@@ -98,7 +102,7 @@
       </g>
 
       {#if showValues}
-        <g class="dots" transform="translate({marginHalf}, {marginHalf})">
+        <g class="dots" transform="translate({marginLeft}, {marginRight})">
           {#each data as d (d.id)}
             {@const cx = scaleX(d[propX])}
             {@const cy = scaleY(d[propY])}
@@ -114,7 +118,7 @@
       {/if}
 
       {#if userData}
-        <g class="user" transform="translate({marginHalf}, {marginHalf})">
+        <g class="user" transform="translate({marginLeft}, {marginRight})">
           <circle cx={scaleX(userData[propX])} cy={scaleY(userData[propY])} {r} />
         </g>
       {/if}
@@ -123,7 +127,7 @@
         <g
           transition:fade={fadeOpts}
           class="smooth"
-          transform="translate({marginHalf}, {marginHalf})"
+          transform="translate({marginLeft}, {marginRight})"
         >
           <path d={path} />
           <path d={path} />
@@ -134,7 +138,7 @@
         <g
           transition:fade={fadeOpts}
           class="examples"
-          transform="translate({marginHalf}, {marginHalf})"
+          transform="translate({marginLeft}, {marginRight})"
         >
           {#each data.filter((d) => d.highlight) as d (d.id)}
             {@const x = scaleX(d[propX])}
