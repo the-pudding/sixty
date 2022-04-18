@@ -25,7 +25,7 @@
 
   $: if (textEl && $readerData.total) textEl.querySelector("mark").innerText = $readerData.total;
 
-  const showTrend = true;
+  const showTrend = false;
   const showValues = true;
 </script>
 

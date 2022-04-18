@@ -12,6 +12,7 @@
   import Aggregate from "$components/Graphic.Aggregate.svelte";
   import Live from "$components/Graphic.Live.svelte";
   import Correct from "$components/Graphic.Correct.svelte";
+  import Copy from "$components/Graphic.Copy.svelte";
   import Age from "$components/Slide.Age.svelte";
   import localStorage from "$utils/localStorage.js";
   import computeComplexity from "$utils/computeComplexity.js";
@@ -28,7 +29,8 @@
     Findings,
     Aggregate,
     Live,
-    Correct
+    Correct,
+    Copy
   };
   const storagePrefix = "pudding_sixty";
   const storageKeys = [
