@@ -66,6 +66,7 @@
   $: if (autoToggle && showToggle) setAuto();
 
   const setAuto = () => {
+    if (autoInterval) clearInterval(autoInterval);
     autoInterval = setInterval(() => (value = value === "off" ? "on" : "off"), 3000);
   };
 
