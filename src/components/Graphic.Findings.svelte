@@ -100,7 +100,7 @@
 <section>
   <figure>
     <div class="info">
-      <h3><strong>Complexity Scores by Age</strong></h3>
+      <h3><strong>Coin Toss Complexity Scores by Age</strong></h3>
       {#if showToggle}
         <Toggle
           on:toggled={onToggled}

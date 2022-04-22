@@ -9,10 +9,9 @@
   export let showExample;
   export let showBad;
   export let userData;
+  export let domainY = extent(data, (d) => d[propY]);
 
   const propX = "age";
-
-  const domainY = extent(data, (d) => d[propY]);
   // console.log(domainY);
   const maxX = 92;
   const domainX = [0, maxX];

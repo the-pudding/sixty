@@ -18,7 +18,7 @@
 <section>
   <figure>
     <div class="info">
-      <h3><strong>Aggregate Complexity Scores by Age</strong></h3>
+      <h3><strong>All Tasks Complexity Scores by Age</strong></h3>
     </div>
 
     <Complexity {propY} {data} {showTrend} {showValues} />

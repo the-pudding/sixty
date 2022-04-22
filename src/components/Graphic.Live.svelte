@@ -1,7 +1,8 @@
 <script>
-  import { ascending } from "d3";
+  import { extent, ascending } from "d3";
   import Complexity from "$components/Complexity.svelte";
   import { readerData } from "$stores/misc.js";
+  import raw from "$data/scatter.csv";
 
   export let text;
 
@@ -27,6 +28,13 @@
 
   const showTrend = false;
   const showValues = true;
+
+  const extentStudy = extent(raw, (d) => +d[propY]);
+  const extentUser = extent(raw, (d) => +d[propY]);
+  const domainY = [
+    Math.min(extentStudy[0], extentUser[0]),
+    Math.max(extentStudy[1], extentUser[1])
+  ];
 </script>
 
 <p bind:this={textEl}>{@html text}</p>
@@ -38,7 +46,7 @@
     </div>
 
     {#if data && data.length}
-      <Complexity {propY} {data} {showTrend} {showValues} />
+      <Complexity {propY} {data} {showTrend} {showValues} {domainY} />
     {/if}
   </figure>
 </section>
