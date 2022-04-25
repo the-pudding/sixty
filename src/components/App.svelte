@@ -113,7 +113,7 @@
     const url = `https://pudding.cool/2022/04/sixty-data/data.json?version=${Date.now()}`;
     const response = await fetch(url);
     $readerData = await response.json();
-    console.log($readerData);
+    // console.log($readerData);
   });
 </script>
 
