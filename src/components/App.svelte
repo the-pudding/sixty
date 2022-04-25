@@ -1,6 +1,7 @@
 <script>
   import { onMount, tick } from "svelte";
   import { writable } from "svelte/store";
+  import WIP from "$components/helpers/WIP.svelte";
   import Footer from "$components/Footer.svelte";
   import Text from "$components/Slide.Text.svelte";
   import Intro from "$components/Slide.Intro.svelte";
@@ -116,6 +117,7 @@
   });
 </script>
 
+<WIP />
 {#each copy.slides as props, i}
   <div
     class="slide"
