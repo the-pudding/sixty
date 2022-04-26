@@ -13,7 +13,12 @@
   const bad = -4.41;
 
   const getHighlight = (age, toss) => {
-    const match = examples.find((d) => d.age === age && d.toss === toss);
+    const match = examples.find((d) => d.age === age && d.toss === toss && !d.uniform);
+    return match ? match.value : undefined;
+  };
+
+  const getUniform = (age, toss) => {
+    const match = examples.find((d) => d.age === age && d.toss === toss && d.uniform);
     return match ? match.value : undefined;
   };
 
@@ -32,6 +37,12 @@
       age: 72.0,
       toss: -2.43,
       value: "HTTHTTTTTTTT"
+    },
+    {
+      age: 45.4,
+      toss: -4.42,
+      value: "HHHHHHHHHHHH",
+      uniform: true
     }
   ];
 
@@ -40,10 +51,16 @@
     age: +d.age,
     toss: +d.toss,
     exclude: +d.toss < bad,
-    highlight: getHighlight(+d.age, +d.toss)
+    highlight: getHighlight(+d.age, +d.toss),
+    uniform: getUniform(+d.age, +d.toss)
   }));
 
-  data.sort((a, b) => ascending(!!a.highlight, !!b.highlight) || ascending(a.toss, b.toss));
+  data.sort(
+    (a, b) =>
+      ascending(!!a.highlight, !!b.highlight) ||
+      ascending(!!a.uniform, !!b.uniform) ||
+      ascending(a.toss, b.toss)
+  );
 
   let value = "off";
   let scrollIndex = 0;
@@ -60,6 +77,7 @@
   $: showTrend = scrollIndex > 1;
   $: showBad = scrollIndex > 2;
   $: showToggle = scrollIndex > 3;
+  $: showUniform = scrollIndex === 3;
   $: showUser = $user.scoreToss && +$user.age <= 90;
   $: updateUser(showUser, scrollIndex);
   $: value = showToggle ? "on" : "off";
@@ -120,6 +138,7 @@
       {showTrend}
       {showValues}
       {showExample}
+      {showUniform}
       {showBad}
       {userData}
     />

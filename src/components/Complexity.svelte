@@ -7,6 +7,7 @@
   export let showValues;
   export let showTrend;
   export let showExample;
+  export let showUniform;
   export let showBad;
   export let userData;
   export let domainY = extent(data, (d) => d[propY]);
@@ -28,6 +29,7 @@
   {showValues}
   {showTrend}
   {showExample}
+  {showUniform}
   {showBad}
   {userData}
 />

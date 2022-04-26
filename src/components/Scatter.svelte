@@ -12,6 +12,7 @@
   export let showValues;
   export let showTrend;
   export let showExample;
+  export let showUniform;
   export let showBad;
   export let userData;
 
@@ -111,7 +112,7 @@
               {cy}
               {r}
               class:exclude={showBad && d.exclude}
-              class:highlight={d.highlight && showExample}
+              class:highlight={(d.highlight && showExample) || (d.uniform && showUniform)}
             />
           {/each}
         </g>
@@ -134,17 +135,17 @@
         </g>
       {/if}
 
-      {#if showExample}
+      {#if showExample || showUniform}
         <g
           transition:fade={fadeOpts}
           class="examples"
           transform="translate({marginLeft}, {marginRight})"
         >
-          {#each data.filter((d) => d.highlight) as d (d.id)}
+          {#each data.filter((d) => (d.highlight && showExample) || (d.uniform && showUniform)) as d (d.id)}
             {@const x = scaleX(d[propX])}
             {@const y = scaleY(d[propY])}
             <rect x={x - rectW / 2} y={y - rectH * 1.5} width={rectW} height={rectH} />
-            <text {x} {y} dy={-rectH / 1.325} text-anchor="middle">{d.highlight}</text>
+            <text {x} {y} dy={-rectH / 1.325} text-anchor="middle">{d.highlight || d.uniform}</text>
           {/each}
         </g>
       {/if}
