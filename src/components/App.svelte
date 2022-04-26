@@ -1,7 +1,6 @@
 <script>
   import { onMount, tick } from "svelte";
   import { writable } from "svelte/store";
-  import WIP from "$components/helpers/WIP.svelte";
   import Footer from "$components/Footer.svelte";
   import Text from "$components/Slide.Text.svelte";
   import Intro from "$components/Slide.Intro.svelte";
@@ -113,11 +112,9 @@
     const url = `https://pudding.cool/2022/04/sixty-data/data.json?version=${Date.now()}`;
     const response = await fetch(url);
     $readerData = await response.json();
-    // console.log($readerData);
   });
 </script>
 
-<WIP />
 {#each copy.slides as props, i}
   <div
     class="slide"
