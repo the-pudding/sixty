@@ -43,7 +43,15 @@
 } */
 
 html {
+  overflow-y: scroll;
 	scroll-behavior: smooth;
+}
+
+@supports (scrollbar-gutter: stable) {
+  html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
 }
 
 main {
@@ -67,7 +75,7 @@ p, blockquote {
 	line-height: 1.6;
 	margin: 1rem auto;
 	max-width: var(--col-width);
-	font-size: 1.25em;
+	font-size: 1.125em;
 }
 
 button, li, input {

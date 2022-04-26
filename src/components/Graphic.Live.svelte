@@ -42,7 +42,7 @@
   <figure>
     <div class="info">
       <h3><strong>Our Aggregate Complexity Scores by Age</strong></h3>
-      <p>Excludes bad responses</p>
+      <!-- <p>Excludes bad responses</p> -->
     </div>
 
     {#if data && data.length}

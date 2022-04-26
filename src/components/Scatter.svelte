@@ -48,7 +48,7 @@
   $: r = Math.floor(width / 100);
   $: margin = r * 10;
   $: marginHalf = margin / 2;
-  $: marginLeft = margin;
+  $: marginLeft = margin / 2;
   $: marginRight = marginHalf;
   $: marginTop = marginHalf;
   $: marginBottom = margin * 1.5;
