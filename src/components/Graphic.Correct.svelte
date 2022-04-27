@@ -25,6 +25,7 @@
 </script>
 
 <p>
-  As for our initial ide to make an age-guessing game, we have guessed right <mark>{correct}%</mark>
+  As for our initial idea to make an age-guessing game, we have guessed right <mark>{correct}%</mark
+  >
   of the time. {text}.
 </p>
