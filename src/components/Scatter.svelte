@@ -4,6 +4,7 @@
   import { scaleLinear, line } from "d3";
   import { interpolatePath } from "d3-interpolate-path";
   import regressionLoess from "$utils/loess";
+  import viewport from "$stores/viewport.js";
   export let data;
   export let propX;
   export let propY;
@@ -45,7 +46,7 @@
   let clientWidth;
 
   $: width = clientWidth;
-  $: height = width;
+  $: height = Math.min($viewport.height * 0.8, width);
   $: r = Math.floor(width / 100);
   $: margin = r * 10;
   $: marginHalf = margin / 2;
