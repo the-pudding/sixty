@@ -11,6 +11,7 @@
   import Aggregate from "$components/Graphic.Aggregate.svelte";
   import Live from "$components/Graphic.Live.svelte";
   import Correct from "$components/Graphic.Correct.svelte";
+  import Quote from "$components/Graphic.Quote.svelte";
   import Copy from "$components/Graphic.Copy.svelte";
   import Age from "$components/Slide.Age.svelte";
   import localStorage from "$utils/localStorage.js";
@@ -21,14 +22,15 @@
   const slideComponents = {
     Text,
     Intro,
-    Test,
     Age,
+    Test,
     Instructions,
     Bad,
     Findings,
     Aggregate,
     Live,
     Correct,
+    Quote,
     Copy
   };
   const storagePrefix = "pudding_sixty";
