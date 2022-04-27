@@ -136,6 +136,7 @@
 {/each}
 
 <div class="slide" id="methods" class:visible={$jumped} class:jumped={$jumped} class:skipped>
+  <h4><strong>Our Methods</strong></h4>
   {#each copy.methods as { value }}
     <p><small>{@html value}</small></p>
   {/each}
