@@ -35,22 +35,22 @@
   .toggle button,
   .label {
     font-family: inherit;
-    font-size: 0.8em;
+    font-size: 0.75em;
   }
 
   .label {
     display: block;
-    line-height: 1.2;
+    line-height: 1.25;
   }
 
   .toggle--inner [role="switch"][aria-checked="true"] :first-child,
   [role="switch"][aria-checked="false"] :last-child {
     display: inline-block;
-    border-radius: 4px;
+    border-radius: 0px;
   }
 
   .toggle--inner button {
-    padding: 0.5em;
+    padding: 0em;
     background-color: var(--color-form-bg);
   }
 
@@ -59,7 +59,7 @@
     pointer-events: none;
     display: inline-block;
     line-height: 1;
-    padding: 0.25em;
+    padding: 0em;
   }
 
   .toggle--inner button:focus {
@@ -73,12 +73,13 @@
   }
 
   .toggle--slider button {
-    width: 3.5em;
-    height: 2em;
+    width: 2.75em;
+    height: 1.5em;
     position: relative;
     margin-left: 0.5em;
     background: var(--color-gray-white);
     outline: 2px solid var(--color-fg);
+    border-radius: 0;
   }
 
   .toggle--slider button:focus {
@@ -88,12 +89,12 @@
   .toggle--slider button::before {
     content: "";
     position: absolute;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1em;
+    height: 1em;
     background: var(--color-form-bg);
-    border-radius: 4px;
+    border-radius: 0px;
     top: 0.25em;
-    right: 1.75em;
+    right: 1.5em;
   }
 
   .toggle--slider button[aria-checked="true"] {
@@ -101,7 +102,7 @@
   }
 
   .toggle--slider button[aria-checked="true"]::before {
-    transform: translateX(1.5em);
+    transform: translateX(1.25em);
   }
 
   .toggle--slider button:focus {

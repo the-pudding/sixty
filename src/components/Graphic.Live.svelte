@@ -1,7 +1,7 @@
 <script>
   import { extent, ascending } from "d3";
   import Complexity from "$components/Complexity.svelte";
-  import { readerData } from "$stores/misc.js";
+  import { user, readerData } from "$stores/misc.js";
   import raw from "$data/scatter.csv";
 
   export let text;
@@ -17,14 +17,13 @@
     };
   };
 
-  $: data = $readerData.results
-    .map((d, id) => ({
-      ...d,
-      id
-    }))
-    .filter((d) => !d.bad);
-
   $: if (textEl && $readerData.total) textEl.querySelector("mark").innerText = $readerData.total;
+  $: showExample = $user.scoreToss && +$user.age <= 90;
+  $: userData = showExample ? { age: +$user.age, score: +(+$user.score).toFixed(2) } : undefined;
+  $: data = $readerData.results.map((d, id) => ({
+    ...d,
+    id
+  }));
 
   const showTrend = false;
   const showValues = true;
@@ -41,12 +40,12 @@
 <section>
   <figure>
     <div class="info">
-      <h3><strong>Our Aggregate Complexity Scores by Age</strong></h3>
+      <h3><strong>Our Aggregate Complexity Scores</strong></h3>
       <!-- <p>Excludes bad responses</p> -->
     </div>
 
     {#if data && data.length}
-      <Complexity {propY} {data} {showTrend} {showValues} {domainY} />
+      <Complexity {propY} {data} {showTrend} {showValues} {domainY} {showExample} {userData} />
     {/if}
   </figure>
 </section>

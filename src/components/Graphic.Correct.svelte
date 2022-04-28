@@ -17,11 +17,11 @@
     const b = $readerData.total;
     correct = Math.round((a / b) * 100);
     const diff = correct - expected;
-    i = diff > 2 ? 2 : diff > -2 ? 1 : 0;
+    i = diff > 3 ? 2 : diff > -3 ? 1 : 0;
   };
 
-  $: text = dynamic[i];
   $: if ($jumped && correct === 0) getRate();
+  $: text = dynamic[i];
 </script>
 
 <p>

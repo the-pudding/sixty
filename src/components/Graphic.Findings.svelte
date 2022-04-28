@@ -119,29 +119,33 @@
 <section>
   <figure>
     <div class="info">
-      <h3><strong>Coin Toss Complexity Scores by Age</strong></h3>
-      {#if showToggle}
-        <Toggle
-          on:toggled={onToggled}
-          label="Exclude Bad Responses"
-          style="slider"
-          options={["on", "off"]}
-          bind:value
-        />
-      {/if}
+      <h3><strong>Coin Toss Complexity Scores</strong></h3>
+      <p class="toggle">
+        {#if showToggle}
+          <Toggle
+            on:toggled={onToggled}
+            label="Exclude uniform responses"
+            style="slider"
+            options={["on", "off"]}
+            bind:value
+          />
+        {/if}
+      </p>
     </div>
 
-    <Complexity
-      {propY}
-      {data}
-      {exclude}
-      {showTrend}
-      {showValues}
-      {showExample}
-      {showUniform}
-      {showBad}
-      {userData}
-    />
+    <div class="chart">
+      <Complexity
+        {propY}
+        {data}
+        {exclude}
+        {showTrend}
+        {showValues}
+        {showExample}
+        {showUniform}
+        {showBad}
+        {userData}
+      />
+    </div>
     <!-- <figcaption>Note: {note}</figcaption> -->
   </figure>
 
@@ -211,11 +215,35 @@
   h3 {
     font-size: 1em;
     text-align: center;
+    margin: 0;
+    line-height: 1;
   }
 
   .info {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding-top: 1em;
+    height: 2.5em;
+  }
+
+  .toggle {
+    line-height: 1;
+    margin: 0;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .info {
+      flex-direction: column;
+    }
+
+    .toggle {
+      margin-top: 1rem;
+    }
+
+    .chart {
+      margin-top: 3rem;
+    }
   }
 
   :global(mark.user) {
