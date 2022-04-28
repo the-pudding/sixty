@@ -222,7 +222,7 @@
   .info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     padding-top: 1em;
     height: 2.5em;
   }

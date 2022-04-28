@@ -40,7 +40,7 @@
 
   .label {
     display: block;
-    line-height: 1.25;
+    line-height: 1;
   }
 
   .toggle--inner [role="switch"][aria-checked="true"] :first-child,
