@@ -69,7 +69,9 @@
 
 <div class="test test--{name}" class:done>
   <p class="challenge"><mark><small>Challenge {index} of 3</small></mark></p>
-  <p class="prompt">{@html prompt} <span><mark>{left}</mark> choice{suffix} left.</span></p>
+  <p class="prompt">
+    {@html prompt} You have <span><mark>{left}</mark> choice{suffix} left.</span>
+  </p>
 
   <div class="options">
     {#each options as value, i}
