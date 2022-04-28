@@ -111,7 +111,7 @@
     });
     repeatUser = $user.story;
     mounted = true;
-    const url = `https://pudding.cool/2022/04/sixty-data/data.json?version=${Date.now()}`;
+    const url = `https://pudding.cool/2022/04/random-data/data.json?version=${Date.now()}`;
     const response = await fetch(url);
     $readerData = await response.json();
   });
