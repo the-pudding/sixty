@@ -146,7 +146,6 @@
         {userData}
       />
     </div>
-    <!-- <figcaption>Note: {note}</figcaption> -->
   </figure>
 
   <article bind:this={articleEl}>
@@ -165,22 +164,6 @@
   </article>
 </section>
 
-<!-- <div class="multiple">
-  <figure>
-    <p><small>Toss</small></p>
-    <Complexity {data} propY="toss" exclude={value} hide={true} />
-  </figure>
-
-  <figure>
-    <p><small>Roll</small></p>
-    <Complexity {data} propY="roll" exclude={value} hide={true} />
-  </figure>
-
-  <figure>
-    <p><small>Spot</small></p>
-    <Complexity {data} propY="spot" exclude={value} hide={true} />
-  </figure>
-</div> -->
 <style>
   section {
     position: relative;

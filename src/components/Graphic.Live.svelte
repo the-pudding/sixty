@@ -1,22 +1,16 @@
 <script>
   import { extent, ascending, format } from "d3";
   import Complexity from "$components/Complexity.svelte";
+  import Toggle from "$components/helpers/Toggle.svelte";
   import { user, readerData } from "$stores/misc.js";
   import raw from "$data/scatter.csv";
 
   export let text;
 
   let textEl;
+  let value = "off";
 
   const propY = "score";
-
-  const checkValid = (keys) => {
-    const bad = {
-      toss: -4.42,
-      roll: -11.38,
-      spot: -15.15
-    };
-  };
 
   $: if (textEl && $readerData.total)
     textEl.querySelector("mark").innerText = format(",")($readerData.total);
@@ -26,8 +20,9 @@
     ...d,
     id
   }));
+  $: exclude = value === "on";
 
-  const showTrend = false;
+  const showTrend = true;
   const showValues = true;
 
   const extentStudy = extent(raw, (d) => +d[propY]);
@@ -42,12 +37,30 @@
 <section>
   <figure>
     <div class="info">
-      <h3><strong>Our Aggregate Complexity Scores</strong></h3>
-      <!-- <p>Excludes bad responses</p> -->
+      <h3><strong>All Tasks Complexity Scores (Ours)</strong></h3>
+      <p class="toggle">
+        <Toggle
+          label="Exclude users with 1+ uniform responses"
+          style="slider"
+          options={["on", "off"]}
+          bind:value
+        />
+      </p>
     </div>
 
     {#if data && data.length}
-      <Complexity {propY} {data} {showTrend} {showValues} {domainY} {showExample} {userData} />
+      <div class="chart">
+        <Complexity
+          {propY}
+          {data}
+          {showTrend}
+          {showValues}
+          {domainY}
+          {showExample}
+          {userData}
+          {exclude}
+        />
+      </div>
     {/if}
   </figure>
 </section>
@@ -63,11 +76,27 @@
 
   h3 {
     font-size: 1em;
-    margin-bottom: 0;
+    text-align: center;
+    margin: 0;
+    line-height: 1;
   }
 
-  figure p {
-    font-size: 1em;
+  .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-direction: column;
+    padding-top: 1em;
+    height: 2.5em;
+  }
+
+  .toggle {
+    line-height: 1;
     margin: 0;
+    margin-top: 1rem;
+  }
+
+  .chart {
+    margin-top: 3rem;
   }
 </style>

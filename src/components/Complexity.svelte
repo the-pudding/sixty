@@ -17,7 +17,7 @@
   const maxX = 92;
   const domainX = [0, maxX];
 
-  $: render = data.filter((d) => (exclude ? d[propY] !== domainY[0] : true));
+  $: render = data.filter((d) => (exclude ? !d.exclude : true));
 </script>
 
 <Scatter
