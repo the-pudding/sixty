@@ -1,4 +1,5 @@
 <script>
+  import { csvParse } from "d3";
   import { onMount, tick } from "svelte";
   import { writable } from "svelte/store";
   import Footer from "$components/Footer.svelte";
@@ -111,9 +112,24 @@
     });
     repeatUser = $user.story;
     mounted = true;
-    const url = `https://pudding.cool/2022/04/random-data/data.json?version=${Date.now()}`;
-    const response = await fetch(url);
-    $readerData = await response.json();
+    const url1 = `https://pudding.cool/2022/04/random-data/data.csv?version=${Date.now()}`;
+    const response1 = await fetch(url1);
+    const csv = await response1.text();
+    const raw = csvParse(csv);
+    const results = raw.map((d) => ({
+      age: +d.age,
+      score: +d.score,
+      exclude: d.exclude === "1"
+    }));
+
+    const url2 = `https://pudding.cool/2022/04/random-data/meta.json?version=${Date.now()}`;
+    const response2 = await fetch(url2);
+    const misc = await response2.json();
+
+    $readerData = {
+      results,
+      ...misc
+    };
   });
 </script>
 
