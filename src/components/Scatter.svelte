@@ -5,6 +5,7 @@
   import { interpolatePath } from "d3-interpolate-path";
   import regressionLoess from "$utils/loess";
   import viewport from "$stores/viewport.js";
+  import { color } from "$data/variables.json";
   export let data;
   export let propX;
   export let propY;
@@ -16,6 +17,9 @@
   export let showUniform;
   export let showBad;
   export let userData;
+
+  let canvas;
+  $: ctx = canvas ? canvas.getContext("2d") : undefined;
 
   const fadeOpts = {
     duration: 150,
@@ -37,6 +41,18 @@
     t += 0.05;
     path = interpolator(t);
     if (t < 1) requestAnimationFrame(animate);
+  };
+
+  const scaleCanvas = () => {
+    const dpr = window.devicePixelRatio || 1;
+
+    ctx.canvas.width = width * dpr;
+    ctx.canvas.height = height * dpr;
+
+    ctx.canvas.style.width = `${width}px`;
+    ctx.canvas.style.height = `${height}px`;
+
+    ctx.scale(dpr, dpr);
   };
 
   let curTrend;
@@ -74,6 +90,25 @@
       animate();
     } else path = curTrend;
   }
+
+  $: if (ctx && width && height) {
+    scaleCanvas(ctx, width, height);
+    ctx.clearRect(0, 0, width, height);
+
+    data.forEach((d) => {
+      const cx = scaleX(d[propX]) + marginLeft;
+      const cy = scaleY(d[propY]) + marginTop;
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, 2 * Math.PI, false);
+      ctx.fillStyle = "rgba(176, 17, 76, 0.5)";
+      ctx.fill();
+    });
+  }
+
+  $: special = data.filter(
+    (d) => (showBad && d.exclude) || (d.highlight && showExample) || (d.uniform && showUniform)
+  );
 </script>
 
 <div bind:clientWidth>
@@ -102,10 +137,12 @@
 
         <text x={width / 2} y={height - r} text-anchor="middle">{propX}</text>
       </g>
-
+    </svg>
+    <canvas bind:this={canvas} style:width="{width}px" style:height="{height}px" />
+    <svg style:width="{width}px" style:height="{height}px">
       {#if showValues}
         <g class="dots" transform="translate({marginLeft}, {marginRight})">
-          {#each data as d (d.id)}
+          {#each special as d (d.id)}
             {@const cx = scaleX(d[propX])}
             {@const cy = scaleY(d[propY])}
             <circle
@@ -155,8 +192,23 @@
 </div>
 
 <style>
+  div {
+  }
+
   svg {
     display: block;
+  }
+
+  svg:last-of-type {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   circle {
