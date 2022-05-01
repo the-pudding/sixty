@@ -21,6 +21,7 @@
     id
   }));
   $: exclude = value === "on";
+  $: loess = $readerData.loess;
 
   const showTrend = true;
   const showValues = true;
@@ -58,6 +59,7 @@
           {domainY}
           {showExample}
           {userData}
+          {loess}
           {exclude}
         />
       </div>

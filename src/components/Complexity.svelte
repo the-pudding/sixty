@@ -11,9 +11,9 @@
   export let showBad;
   export let userData;
   export let domainY = extent(data, (d) => d[propY]);
+  export let loess;
 
   const propX = "age";
-  // console.log(domainY);
   const maxX = 92;
   const domainX = [0, maxX];
 
@@ -32,4 +32,6 @@
   {showUniform}
   {showBad}
   {userData}
+  {exclude}
+  {loess}
 />

@@ -107,6 +107,7 @@
   $: updateStorage($user);
 
   onMount(async () => {
+    // clear();
     storageKeys.forEach((key) => {
       $user[key] = localStorage.get(`${storagePrefix}_${key}`);
     });
@@ -126,8 +127,13 @@
     const response2 = await fetch(url2);
     const misc = await response2.json();
 
+    const url3 = `https://pudding.cool/2022/04/random-data/loess.json?version=${Date.now()}`;
+    const response3 = await fetch(url3);
+    const loess = await response3.json();
+
     $readerData = {
       results,
+      loess,
       ...misc
     };
   });

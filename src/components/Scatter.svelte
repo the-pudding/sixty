@@ -4,8 +4,8 @@
   import { scaleLinear, line } from "d3";
   import { interpolatePath } from "d3-interpolate-path";
   import regressionLoess from "$utils/loess";
-  import viewport from "$stores/viewport.js";
   import { color } from "$data/variables.json";
+  import viewport from "$stores/viewport.js";
   export let data;
   export let propX;
   export let propY;
@@ -17,9 +17,15 @@
   export let showUniform;
   export let showBad;
   export let userData;
+  export let exclude;
+  export let loess;
 
   let canvas;
-  $: ctx = canvas ? canvas.getContext("2d") : undefined;
+  let lineAll;
+  let lineExclude;
+  const frozen = data.map((d) => ({
+    ...d
+  }));
 
   const fadeOpts = {
     duration: 150,
@@ -61,9 +67,11 @@
   let t;
   let clientWidth;
 
+  $: ctx = canvas ? canvas.getContext("2d") : undefined;
   $: width = clientWidth;
   $: height = Math.min($viewport.height * 0.8, width);
-  $: r = Math.floor(width / 100);
+  $: r = Math.floor(width / (width < 600 ? 100 : 150));
+  $: fill = `rgba(176, 17, 76, ${data.length < 10000 ? 0.5 : 0.33})`;
   $: margin = r * 10;
   $: marginHalf = margin / 2;
   $: marginLeft = margin / 2;
@@ -82,8 +90,12 @@
   $: rectH = 24;
 
   $: if (clientWidth) {
+    const l1 = loess ? loess.raw : lineLoess(frozen);
+    const l2 = loess ? loess.excluded : lineLoess(frozen.filter((d) => !d.exclude));
+    lineAll = lineGenerator(l1);
+    lineExclude = lineGenerator(l2);
     const prevTrend = curTrend;
-    curTrend = lineGenerator(lineLoess(data));
+    curTrend = exclude ? lineExclude : lineAll;
     if (prevTrend) {
       t = 0;
       interpolator = interpolatePath(prevTrend, curTrend);
@@ -101,7 +113,7 @@
 
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, 2 * Math.PI, false);
-      ctx.fillStyle = "rgba(176, 17, 76, 0.5)";
+      ctx.fillStyle = fill;
       ctx.fill();
     });
   }
