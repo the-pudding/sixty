@@ -30,7 +30,7 @@
       $user.scoreRoll &&
       $user.scoreSpot
     ) {
-      const table = "readers";
+      const table = "random_readers";
       const data = {};
       const keys = [
         "toss",

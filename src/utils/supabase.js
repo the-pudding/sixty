@@ -12,7 +12,7 @@ export const insert = async ({ table, data }) => {
 
 export const getScore = async (id, a) => {
 	const response = await supabase
-		.from("acss")
+		.from("random_acss")
 		.select(`K_${a}`)
 		.eq("id", id);
 
