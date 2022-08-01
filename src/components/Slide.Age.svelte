@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import Range from "$components/helpers/Range.svelte";
   import { user } from "$stores/misc.js";
-  import { insert } from "$utils/supabase.js";
+  // import { insert } from "$utils/supabase.js";
 
   export let guess;
   export let prompt;
@@ -19,34 +19,34 @@
     $user.age = value;
     $user.rightwrong = $user.guess ? $user.age > 60 : $user.age <= 60;
 
-    if (
-      !$user.story &&
-      $user.age &&
-      $user.toss &&
-      $user.spot &&
-      $user.roll &&
-      $user.score &&
-      $user.scoreToss &&
-      $user.scoreRoll &&
-      $user.scoreSpot
-    ) {
-      const table = "random_readers";
-      const data = {};
-      const keys = [
-        "toss",
-        "spot",
-        "roll",
-        "age",
-        "guess",
-        "rightwrong",
-        "score",
-        "scoreToss",
-        "scoreRoll",
-        "scoreSpot"
-      ];
-      keys.forEach((key) => (data[key] = $user[key]));
-      insert({ table, data });
-    }
+    // if (
+    //   !$user.story &&
+    //   $user.age &&
+    //   $user.toss &&
+    //   $user.spot &&
+    //   $user.roll &&
+    //   $user.score &&
+    //   $user.scoreToss &&
+    //   $user.scoreRoll &&
+    //   $user.scoreSpot
+    // ) {
+    //   const table = "random_readers";
+    //   const data = {};
+    //   const keys = [
+    //     "toss",
+    //     "spot",
+    //     "roll",
+    //     "age",
+    //     "guess",
+    //     "rightwrong",
+    //     "score",
+    //     "scoreToss",
+    //     "scoreRoll",
+    //     "scoreSpot"
+    //   ];
+    //   keys.forEach((key) => (data[key] = $user[key]));
+    //   insert({ table, data });
+    // }
 
     dispatch("next");
   };
